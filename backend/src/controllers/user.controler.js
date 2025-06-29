@@ -1,15 +1,15 @@
 
 const signup = (req,res) => {
     // Logic for user signup
-    res.send("User signed up");
+    res.send("!    You are in the signup page   !");
 }
-const signin = (req,res) => {
+const login = (req,res) => {
     // Logic for user signup
-    res.send("User signed in");
+    res.send("!    You are in the login page   !");
 }
-const signout = (req,res) => {
+const logout = (req,res) => {
     // Logic for user signup
-    res.send("User signed out");
+    res.send("!    You are in the logout page   !");
 }
 
-export {signup , signin, signout};
+export {signup , login, logout};
