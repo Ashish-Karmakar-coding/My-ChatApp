@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import userRouter from './routers/user.router.js';
+import connectDB from './db/connectDB.js';
 
 dotenv.config()
 
@@ -15,5 +16,6 @@ app.use(express.json()) // Middleware to parse JSON bodies
 app.use("/api/users", userRouter)
 
 app.listen(PORT,()=>{
+    connectDB()
     console.log("The server is running .....")
 })

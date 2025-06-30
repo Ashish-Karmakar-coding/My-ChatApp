@@ -10,7 +10,7 @@ const signup = async (req,res) => {
     try {
         if(!username || ! password || ! email) throw new Error("Please provide all the required fields");
         
-        const isAreadyExist = await User.findone({email})
+        const isAreadyExist = await User.findOne({email})
         if(isAreadyExist) throw new Error("User already exists")
 
         hashedPassword = bcrypt.hashSync(password, 10);
