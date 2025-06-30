@@ -14,7 +14,10 @@ const userSchema = new mongoose.Schema(
     password:{
         type: String,
         required: true,
-    }
+    },
+    verificationToken:String,
+    verificationTokenExpiresAt: Date
+
   },
   { timestamps: true }
 );

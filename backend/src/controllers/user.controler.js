@@ -1,7 +1,8 @@
 import {User} from '../models/user.model.js';
+import {generateVerificationToken} from '../utils/generateVerificationToken.js';
 import bcrypt from 'bcryptjs';
 
-const signup = (req,res) => {
+const signup = async (req,res) => {
     // Logic for user signup
 
     const {username,password , email} = req.body;
@@ -9,18 +10,21 @@ const signup = (req,res) => {
     try {
         if(!username || ! password || ! email) throw new Error("Please provide all the required fields");
         
-        const isAreadyExist = User.findone({email})
+        const isAreadyExist = await User.findone({email})
         if(isAreadyExist) throw new Error("User already exists")
 
         hashedPassword = bcrypt.hashSync(password, 10);
+        verificationToken = generateVerificationToken(); //  this function generates a token
 
         const user = new User({
             username,
             email,
-            password : hashedPassword
+            password : hashedPassword,
+            verificationToken,
+            verificationTokenExpiresAt: Date.now() + 24*60*60*1000 // Token valid for 24 hours
         })
 
-        user.save()
+        await user.save()
             .res.status(201)
             .json({
                 message: "User created successfully",
