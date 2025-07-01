@@ -1,5 +1,5 @@
 import {User} from '../models/user.model.js';
-import {generateVerificationToken} from '../utils/generateVerificationToken.js';
+import {generateToken} from '../utils/generateToken.js';
 import bcrypt from 'bcryptjs';
 
 const signup = async (req,res) => {
@@ -29,7 +29,13 @@ const signup = async (req,res) => {
             password : hashedPassword,
         })
 
-        verificationToken = generateVerificationToken(user._id,res); //  this function generates a token
+        if (user) {
+            generateToken(user._id,res); //  this function generates a token
+        }else{
+            return res.status(500).json({
+                message: "Error creating user"
+            })
+        }
 
         await user.save()
             .res.status(201)
@@ -57,6 +63,13 @@ const login = async (req,res) => {
                 message: "invalid credentials"
             })
         }
+
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters long"
+            })
+        }
+        // Check if user exists
         const user = await User.findOne({email})
         if(!user){
             return res.status(404).json({
@@ -71,7 +84,11 @@ const login = async (req,res) => {
             })
         }
 
+        generateToken(user._id,res); //  this function generates a token
         
+        return res.status(200).json({
+            message: "Login successful",
+        })
         
     } catch (error) {
         throw new Error("Error in login : ", error.message)
