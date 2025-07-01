@@ -15,7 +15,12 @@ const signup = async (req,res) => {
         if (password.length < 6) return res.status(400).json({
             message: "Password must be at least 6 characters long"
         })
-        
+
+        if (!email.includes('@gmail.com')) {
+        return res.status(400).json({
+            message: "The email is Invalid"
+        });
+}
         const isAreadyExist = await User.findOne({email})
         if(isAreadyExist) return res.status(404).json({
                 message:"user aleardy exists with this email"
@@ -88,6 +93,8 @@ const login = async (req,res) => {
         
         return res.status(200).json({
             message: "Login successful",
+            username:user.username,
+            email: user.email,
         })
         
     } catch (error) {
@@ -96,8 +103,19 @@ const login = async (req,res) => {
 
 }
 const logout = (req,res) => {
-    // Logic for user signup
-    res.send("!    You are in the logout page   !");
+    try {
+        res.cookie('jwt', '', { // Clear the cookie
+            maxAge: 0, // Set cookie to expire immediately
+            httpOnly: true,
+            sameSite: 'Strict',
+            secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
+        });
+        return res.status(200).json({
+            message: "Logout successful"
+        });
+    } catch (error) {
+        throw new Error("Error in logout : ", error.message);
+    }
 }
 
 export {signup , login, logout};
