@@ -118,4 +118,9 @@ const logout = (req,res) => {
     }
 }
 
-export {signup , login, logout};
+const updateProfile = async (req, res) => {
+    res.send("Update profile endpoint is not implemented yet");
+    // Logic for updating user profile
+}
+
+export {signup , login, logout , updateProfile};

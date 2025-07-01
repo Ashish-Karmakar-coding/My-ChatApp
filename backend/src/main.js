@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import userRouter from './routers/user.router.js';
 import connectDB from './db/connectDB.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config()
 
@@ -13,7 +14,8 @@ app.get('/',(req,res)=>{
 })
 
 app.use(express.json()) // Middleware to parse JSON bodies
-app.use("/api/users", userRouter)
+app.use("/api/users", userRouter) // User routes
+app.use(cookieParser()) // Middleware to parse cookies
 
 app.listen(PORT,()=>{
     connectDB()
