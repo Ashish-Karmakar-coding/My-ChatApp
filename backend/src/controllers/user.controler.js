@@ -39,9 +39,16 @@ const signup = async (req,res) => {
     }
     
 }
-const login = (req,res) => {
-    // Logic for user signup
-    res.send("!    You are in the login page   !");
+const login = async (req,res) => {
+
+    const {username,password,email} = req.body
+    try {
+        
+        
+    } catch (error) {
+        throw new Error("Error in login : ", error.message)
+    }
+
 }
 const logout = (req,res) => {
     // Logic for user signup
