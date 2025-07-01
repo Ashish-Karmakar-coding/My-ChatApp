@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 const signup = async (req,res) => {
     // Logic for user signup
 
-    const {username,password , email} = req.body;
+    const {username,password,email} = req.body;
 
     try {
         if(!username || !password || !email) return res.status(400).json({
@@ -27,7 +27,6 @@ const signup = async (req,res) => {
             username,
             email,
             password : hashedPassword,
-            verificationToken,
         })
 
         verificationToken = generateVerificationToken(user._id,res); //  this function generates a token
@@ -49,9 +48,15 @@ const signup = async (req,res) => {
 }
 const login = async (req,res) => {
 
-    const {username,password,email} = req.body
+    const {password,email} = req.body
 
     try {
+
+        if (!password || !email) {
+            return res.status(400).json({
+                message: "invalid credentials"
+            })
+        }
         const user = await User.findOne({email})
         if(!user){
             return res.status(404).json({
@@ -59,8 +64,8 @@ const login = async (req,res) => {
             })
         }
 
-        const isPasswordValid = bcrypt.compareSync(password, user.password);
-        if(!isPasswordValid){
+        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+        if(!isPasswordCorrect){
             return res.status(401).json({
                 message:"Invalid password"
             })
