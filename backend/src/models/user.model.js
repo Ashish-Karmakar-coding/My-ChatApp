@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
     },
-    verificationToken:String,
+    verificationToken: String,
     verificationTokenExpiresAt: Date
 
   },

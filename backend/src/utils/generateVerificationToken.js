@@ -1,4 +1,18 @@
-export const generateVerificationToken = () => {
-    // Generate a random token for email verification
-    return Math.floor(10000+Math.random() * 90000).toString(); // Generates a 5-digit token
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+ 
+export const generateVerificationToken = (userId,res) => {
+    const token = jwt.sign({userId},process.env.JWT_SECRET,{
+        expiresIn: '7d'
+    })
+
+    res.cookie('verificationToken', token,{
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        httpOnly: true,
+        sameSite: 'Strict',
+        secure : process.env.NODE_ENV !== 'development', // Use secure cookies in production
+    })
+
+    return token
 }

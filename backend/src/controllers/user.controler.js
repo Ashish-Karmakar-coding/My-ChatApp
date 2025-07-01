@@ -8,21 +8,29 @@ const signup = async (req,res) => {
     const {username,password , email} = req.body;
 
     try {
-        if(!username || ! password || ! email) throw new Error("Please provide all the required fields");
+        if(!username || !password || !email) return res.status(400).json({
+            message: "invalid credentials"
+        })
+
+        if (password.length < 6) return res.status(400).json({
+            message: "Password must be at least 6 characters long"
+        })
         
         const isAreadyExist = await User.findOne({email})
-        if(isAreadyExist) throw new Error("User already exists")
+        if(isAreadyExist) return res.status(404).json({
+                message:"user aleardy exists with this email"
+            })
 
         hashedPassword = bcrypt.hashSync(password, 10);
-        verificationToken = generateVerificationToken(); //  this function generates a token
 
         const user = new User({
             username,
             email,
             password : hashedPassword,
             verificationToken,
-            verificationTokenExpiresAt: Date.now() + 24*60*60*1000 // Token valid for 24 hours
         })
+
+        verificationToken = generateVerificationToken(user._id,res); //  this function generates a token
 
         await user.save()
             .res.status(201)
@@ -42,7 +50,22 @@ const signup = async (req,res) => {
 const login = async (req,res) => {
 
     const {username,password,email} = req.body
+
     try {
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(404).json({
+                message:"user not found"
+            })
+        }
+
+        const isPasswordValid = bcrypt.compareSync(password, user.password);
+        if(!isPasswordValid){
+            return res.status(401).json({
+                message:"Invalid password"
+            })
+        }
+
         
         
     } catch (error) {
