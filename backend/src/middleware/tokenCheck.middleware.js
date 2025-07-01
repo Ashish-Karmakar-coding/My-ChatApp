@@ -3,7 +3,7 @@ import {User} from '../models/user.model.js';
 
 const tokenCheck = async (req,res,next)=>{
     // Middleware to check if the user is authenticated
-    const token = req.cookies.jwt
+    const token = req.cookies.jwt // Get the token from cookies
     if (!token){
         return res.status(401).json({
             message: "Unauthorized, No token provided"
