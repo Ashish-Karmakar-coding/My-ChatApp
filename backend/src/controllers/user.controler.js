@@ -117,7 +117,6 @@ const logout = (req,res) => {
         throw new Error("Error in logout : ", error.message);
     }
 }
-
 const updateProfile = async (req, res) => {
     res.send("Update profile endpoint is not implemented yet");
     // Logic for updating user profile
