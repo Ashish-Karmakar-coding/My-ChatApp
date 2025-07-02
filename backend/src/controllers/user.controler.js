@@ -1,6 +1,7 @@
 import {User} from '../models/user.model.js';
 import {generateToken} from '../utils/generateToken.js';
 import bcrypt from 'bcryptjs';
+import cloudinary from '../utils/cloudinary.ulit.js';
 
 const signup = async (req,res) => {
     // Logic for user signup
@@ -118,8 +119,56 @@ const logout = (req,res) => {
     }
 }
 const updateProfile = async (req, res) => {
-    res.send("Update profile endpoint is not implemented yet");
-    // Logic for updating user profile
+
+    const {profilePicture} = req.body;
+    const userId = req.user._id
+
+    if(!profilePicture) {
+        return res.status(400).json({
+            message: "Profile picture is required to update the profile"
+        });
+    }
+
+    try {
+        
+        const uploadResponse = await cloudinary.uploader.upload(profilePicture)
+        if (!uploadResponse || !uploadResponse.secure_url) {
+            return res.status(500).json({
+                message: "Error uploading profile picture"
+            });
+        }
+
+        const updateUser = User.findByIdAndUpdate(userId,{profilePicture: uploadResponse.secure_url},{new:true}); 
+
+        return res.status(200).json({updateUser,
+            message: "Profile updated successfully",
+        })
+
+    } catch (error) {
+        throw new Error("Error in updateProfile : ", error.message);
+    }
+
+}
+const checkUser = (req, res) => {
+    try {
+        const user = req.user; // Assuming user is set by tokenCheck middleware
+        if (!user) {
+            return res.status(401).json({
+                message: "User not authenticated"
+            });
+        }
+        return res.status(200).json({
+            message: "User is authenticated",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                profilePicture: user.profilePicture
+            }
+        });
+    } catch (error) {
+        throw new Error("Error in checkUser : ", error.message);
+    }
 }
 
-export {signup , login, logout , updateProfile};
+export {signup , login, logout , updateProfile , checkUser};

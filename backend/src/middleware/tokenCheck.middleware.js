@@ -10,7 +10,7 @@ const tokenCheck = async (req,res,next)=>{
         });
     }
 
-    // the token contain information about the usr such as username 
+    // the token contains information about the user such as user id in the database 
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) { // If the token is invalid or expired
