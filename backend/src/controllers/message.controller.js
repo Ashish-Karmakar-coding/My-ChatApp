@@ -26,6 +26,7 @@ const getMessages = async (req, res) => {
         const myId = req.user._id;
 
         if(!senderId || !myId){
+            
             return res.status(400).json({message: "Sender ID or User ID is missing"});
         }
 
