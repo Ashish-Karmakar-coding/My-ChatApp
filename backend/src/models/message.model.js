@@ -14,7 +14,6 @@ messageSchema = new mongoose.Schema({
     },
     text: String,
     photo : String,
-    messageTime: Date
 
 },{timestamps: true})
 
