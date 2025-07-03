@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import {User} from 'user.model.js'; // Adjust the import path as necessary
+import mongoose from 'mongoose';// Adjust the import path as necessary
 
-messageSchema = new mongoose.Schema({
+const messageSchema = new mongoose.Schema({
     senderId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

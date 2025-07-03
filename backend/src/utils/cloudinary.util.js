@@ -10,4 +10,4 @@ cloudinary.config({
 
 })    // Cloudinary cloud name
 
-export default cloudinary;
+export  {cloudinary};

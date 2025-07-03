@@ -6,7 +6,7 @@ import {
         sendMessage
 } from '../controllers/message.controller.js';
 
-router = express.Router();
+const router = express.Router();
 
 router.get('/users',tokenCheck,getUserForSideBar)
 router.get('/:id',tokenCheck,getMessages)
