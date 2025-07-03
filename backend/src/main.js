@@ -17,13 +17,13 @@ app.get('/',(req,res)=>{
 
 app.use(express.json()) // Middleware to parse JSON bodies
 app.use(cookieParser()) // Middleware to parse cookies
-
-app.use("/api/users", userRoutes) // User routes
-app.use("/api/messages",messageRoutes) // Message routes
 app.use(cors({
     origin: "http://localhost:5173", // Replace with your frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
+
+app.use("/api/users", userRoutes) // User routes
+app.use("/api/messages",messageRoutes) // Message routes
 
 app.listen(PORT,()=>{
     connectDB()
