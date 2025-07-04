@@ -2,13 +2,13 @@ import { useState } from "react";
 
 export default function SignUpPage() {
 
-    const {data,setData} = useState({
-        fullName:"",
-        email:"",
-        password:""
-    })
+    // const {data,setData} = useState({
+    //     fullName:"",
+    //     email:"",
+    //     password:""
+    // })
 
-    isvalidInput = ()=>{}
+    // isvalidInput = ()=>{}
 
 
   return (
