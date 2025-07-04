@@ -1,17 +1,14 @@
-import SideBar from "./components/SideBar.jsx";
-import LogInPage from "./pages/LogIn.page.jsx";
+import React from "react";
 
-function App() {
-  console.log("App rendered");
+import Login from "./pages/LogIn.page.jsx";
+import SideBar from "./components/SideBar.jsx";
+import SignUpPage from "./pages/SignUp.page.jsx";
+
+function App(){
   return (
     <>
-      <div className="bg-gray-900">
-        <SideBar />
-        {/* <LogInPage /> */}
-      </div>
-
+      <Login/>
+      <SignUpPage/>
     </>
-  );
+  )
 }
-
-export default App;
