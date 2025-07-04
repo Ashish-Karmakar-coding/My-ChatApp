@@ -1,6 +1,16 @@
 import { useState } from "react";
 
 export default function SignUpPage() {
+
+    const {data,setData} = useState({
+        fullName:"",
+        email:"",
+        password:""
+    })
+
+    isvalidInput = ()=>{}
+
+
   return (
        <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
       <div className="w-full max-w-4xl bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
