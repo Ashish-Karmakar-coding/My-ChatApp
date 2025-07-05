@@ -2,19 +2,19 @@ import { useState } from "react";
 
 export default function SignUpPage() {
 
-    const {data,setData} = useState({
-        fullName:"",
-        email:"",
-        password:""
-    })
+    // const {data,setData} = useState({
+    //     fullName:"",
+    //     email:"",
+    //     password:""
+    // })
 
-    isvalidInput = ()=>{
-        if(data.fullName === "" || data.email === "" || data.password === ""){
-            return false;
-        }
-        return true;
-    }
-    handleSignup = ()=>{}
+    // isvalidInput = ()=>{
+    //     if(data.fullName === "" || data.email === "" || data.password === ""){
+    //         return false;
+    //     }
+    //     return true;
+    // }
+    // handleSignup = ()=>{}
 
 
   return (
