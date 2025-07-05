@@ -13,6 +13,8 @@ import {Routes , Route, Navigate} from "react-router-dom";
 
 import {useAuthStore} from "./lib/authStore.js";
 
+import {Toaster} from "react-hot-toast";
+
 export default function App() {
 
   const {authUser,checkAuth , isCheckingAuth} = useAuthStore();
@@ -31,12 +33,15 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={authUser ? <HomePage />: <Navigate to="/login"/>} />
+        <Route path="/" element={authUser ? <HomePage />: <Navigate to="/signup"/>} />
         <Route path="/login" element={!authUser ?<LogInPage />: <Navigate to="/"/>} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/"/>} />
         <Route path="/settings" element={<SettingPage />} />
-        <Route path="/profile" element={authUser ? <ProfilePage />: <Navigate to="/login"/>} />
+        <Route path="/profile" element={authUser ? <ProfilePage />: <Navigate to="/signup"/>} />
       </Routes>
+
+    <Toaster/>
+
     </>
   );
 }

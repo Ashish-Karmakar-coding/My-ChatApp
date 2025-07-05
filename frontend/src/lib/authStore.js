@@ -26,12 +26,14 @@ export const useAuthStore = create((set)=>({
         // Simulate API call
         try {
             const response = await axiosInstance.post('/auth/signup', data);
-            set({authUser: response.data, isSigningUp: false});
+            set({authUser: response.data});
             toast.success("Sign Up Successful!");
             
         } catch (error) {
-            toast.error("Sign Up Failed. Please try again.");
+            toast.error(error.response.data.message || "Sign up Failed. Please try again.");
             console.error("Sign Up Error:", error);
+            set({isSigningUp: false});
+        }finally{
             set({isSigningUp: false});
         }
     },
