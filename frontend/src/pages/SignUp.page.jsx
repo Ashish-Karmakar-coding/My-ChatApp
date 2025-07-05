@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import {toast} from "react-hot-toast";
 
+import backgroundImg from "../assets/background.jpg";
+
 export default function SignUpPage() {
   const [data, setData]  = useState({
     username: "",
@@ -17,7 +19,7 @@ export default function SignUpPage() {
     if(!data.username.trim()) return toast.error("Username is required");
     if(!data.email.trim()) return toast.error("Email is required");
     if(!data.password.trim()) return toast.error("Password is required");
-    if(data.password.length < 6) return toast.error("Password must be at least 6 characters long");
+    if(data.password.length < 6) return toast.error("Password must be at l    east 6 characters long");
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return toast.error("Invalid email format");
 
     return true;
@@ -106,7 +108,7 @@ export default function SignUpPage() {
           {/* Right side: Image */}
           <div className="hidden md:block md:w-1/2">
             <img
-              src="https://pin.it/21XSApM5D"
+              src={backgroundImg}
               alt="Signup"
               className="h-full w-full object-cover"
             />
