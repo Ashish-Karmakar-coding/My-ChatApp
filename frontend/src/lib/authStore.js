@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {axiosInstance} from '../utils/axiosInstance.js'
+import {axiosInstance} from '../axios/axios.js'
 import {toast} from 'react-hot-toast'
 
 export const useAuthStore = create((set)=>({
@@ -10,6 +10,17 @@ export const useAuthStore = create((set)=>({
     
     isCheckingAuth : true,
 
+    checkAuth: async () => {
+        set({isCheckingAuth: true});
+        // Simulate API call
+        try {
+            const response = await axiosInstance.get('/auth/check');
+            set({authUser: response.data, isCheckingAuth: false});
+        } catch (error) {
+            console.error("Check Auth Error:", error);
+            set({isCheckingAuth: false , authUser: null});
+        }
+    },
     signUp: async (data) => {
         set({isSigningUp: true});
         // Simulate API call

@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function SignUpPage() {
 
     // const {data,setData} = useState({
-    //     fullName:"",
+    //     username:"",
     //     email:"",
     //     password:""
     // })
