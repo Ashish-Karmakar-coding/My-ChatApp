@@ -43,7 +43,7 @@ const handleLogin = (e)=>{
               Welcome Back
             </h2>
             <p className="text-gray-400 mt-2 text-center md:text-left">
-              Sign up to get started
+              Log in to get started
             </p>
             <form onSubmit={handleLogin
 
