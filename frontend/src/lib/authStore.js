@@ -14,7 +14,7 @@ export const useAuthStore = create((set)=>({
         set({isCheckingAuth: true});
         // Simulate API call
         try {
-            const response = await axiosInstance.get('/auth/check');
+            const response = await axiosInstance.get('/users/check-user');
             set({authUser: response.data, isCheckingAuth: false});
         } catch (error) {
             console.error("Check Auth Error:", error);
@@ -25,7 +25,7 @@ export const useAuthStore = create((set)=>({
         set({isSigningUp: true});
         // Simulate API call
         try {
-            const response = await axiosInstance.post("/auth/signup", data);
+            const response = await axiosInstance.post("/users/signup", data);
             set({authUser: response.data});
             toast.success("Sign Up Successful!");
             
@@ -41,7 +41,7 @@ export const useAuthStore = create((set)=>({
         set({isLoggingIn: true});
         // Simulate API call
         try {
-            const response = await axiosInstance.post('/auth/login', data);
+            const response = await axiosInstance.post('/users/login', data);
             set({authUser: response.data, isLoggingIn: false});
             toast.success("Log In Successful!");
 
