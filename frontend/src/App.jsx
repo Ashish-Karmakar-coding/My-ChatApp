@@ -39,6 +39,7 @@ export default function App() {
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/profile" element={authUser ? <ProfilePage />: <Navigate to="/signup"/>} />
       </Routes>
+      <ProfilePage/>
 
     <Toaster/>
 
