@@ -1,4 +1,4 @@
-import {use, useEffect,useState} from "react";
+import {useEffect} from "react";
 
 import LogInPage from "./pages/LogIn.page.jsx";
 import SideBar from "./components/SideBar.jsx";
@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUp.page.jsx";
 import  SettingPage  from "./pages/Settings.page.jsx";
 import  ProfilePage  from "./pages/Profile.page.jsx";
 import  HomePage  from "./pages/Home.page.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 import { Loader } from "lucide-react";
 
@@ -32,6 +33,7 @@ export default function App() {
 
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={authUser ? <HomePage />: <Navigate to="/signup"/>} />
         <Route path="/login" element={!authUser ?<LogInPage />: <Navigate to="/"/>} />
@@ -39,7 +41,6 @@ export default function App() {
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/profile" element={authUser ? <ProfilePage />: <Navigate to="/signup"/>} />
       </Routes>
-      <ProfilePage/>
 
     <Toaster/>
 

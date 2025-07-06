@@ -13,27 +13,19 @@ const signup = async (req,res) => {
             message: "invalid credentials"
         })
 
-        if (password.length < 6) return res.status(400).json({
-            message: "Password must be at least 6 characters long"
-        })
-
-        if (!email.includes('@gmail.com')) {
-        return res.status(400).json({
-            message: "The email is Invalid"
-        });
-}
         const isAreadyExist = await User.findOne({email})
         if(isAreadyExist) return res.status(404).json({
                 message:"user aleardy exists with this email"
             })
 
-        hashedPassword = bcrypt.hashSync(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
 
         const user = new User({
             username,
             email,
             password : hashedPassword,
         })
+        await user.save()
 
         if (user) {
             generateToken(user._id,res); //  this function generates a token
@@ -43,8 +35,7 @@ const signup = async (req,res) => {
             })
         }
 
-        await user.save()
-            .res.status(201)
+        return res.status(201)
             .json({
                 message: "User created successfully",
                 user: {
@@ -54,7 +45,7 @@ const signup = async (req,res) => {
                 }
             })
     } catch (error) {
-        throw new Error("Error in signup : ", error.message);
+        throw new Error("Error in signup : "+ error.message);
     }
     
 }
