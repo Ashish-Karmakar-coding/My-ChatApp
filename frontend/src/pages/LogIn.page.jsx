@@ -13,7 +13,7 @@ function LogInPage() {
     password: "",
   });
 
-  const {isLoggingIn , Login} = useAuthStore
+  const {isLoggingIn , Login} = useAuthStore()
 
   const isvalidInput = () => {
     if(!data.email.trim()) return toast.error("Email is required");

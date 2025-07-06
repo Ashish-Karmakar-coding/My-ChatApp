@@ -42,12 +42,14 @@ export const useAuthStore = create((set)=>({
         // Simulate API call
         try {
             const response = await axiosInstance.post('/users/login', data);
-            set({authUser: response.data, isLoggingIn: false});
+            set({authUser: response.data});
             toast.success("Log In Successful!");
 
         } catch (error) {
             toast.error("Log in Failed. Please try again.");
             console.error("Log in Error:", error);
+            set({isLoggingIn: false});
+        }finally{
             set({isLoggingIn: false});
         }
     },
