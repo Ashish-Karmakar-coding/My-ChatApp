@@ -33,8 +33,8 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
-      <SideBar/>
+    <Navbar/>
+      
       <Routes>
         <Route path="/" element={authUser ? <HomePage />: <Navigate to="/signup"/>} />
         <Route path="/login" element={!authUser ?<LogInPage />: <Navigate to="/"/>} />
