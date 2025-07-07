@@ -34,6 +34,7 @@ export default function App() {
   return (
     <>
       <Navbar />
+      <SideBar/>
       <Routes>
         <Route path="/" element={authUser ? <HomePage />: <Navigate to="/signup"/>} />
         <Route path="/login" element={!authUser ?<LogInPage />: <Navigate to="/"/>} />
