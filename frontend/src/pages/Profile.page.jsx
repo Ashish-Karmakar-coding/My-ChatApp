@@ -1,7 +1,14 @@
 import { useRef } from "react";
+import { useAuthStore } from "../lib/authStore.js";
 
 export default function ProfilePage() {
     const fileInputRef = useRef(null);
+
+    const { logout } = useAuthStore();
+
+    const handleLogout = () => {
+        logout();
+    }
 
     const handleCameraClick = () => {
         fileInputRef.current.click();
@@ -71,7 +78,8 @@ export default function ProfilePage() {
                         <button className="flex-1 bg-purple-600 hover:bg-purple-700 rounded-full px-6 py-2 font-semibold transition">
                             Edit Profile
                         </button>
-                        <button className="flex-1 bg-gray-700 hover:bg-gray-600 rounded-full px-6 py-2 font-semibold transition">
+                        <button className="flex-1 bg-gray-700 hover:bg-gray-600 rounded-full px-6 py-2 font-semibold transition"
+                        onClick={handleLogout}>
                             Log Out
                         </button>
                     </div>

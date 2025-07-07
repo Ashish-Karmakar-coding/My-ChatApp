@@ -53,5 +53,19 @@ export const useAuthStore = create((set)=>({
             set({isLoggingIn: false});
         }
     },
+    logout: async() =>{
+        set({isCheckingAuth: true});
+        // Simulate API call
+        try {
+            await axiosInstance.get('/users/logout');
+            set({authUser: null});
+            toast.success("Log Out Successful!");
+        } catch (error) {
+            console.error("Log Out Error:", error);
+            toast.error(error.message);
+        }finally{
+            set({isCheckingAuth: false});
+        }
+    }
 
 }))
