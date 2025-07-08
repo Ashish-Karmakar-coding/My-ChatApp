@@ -62,7 +62,7 @@ export const useAuthStore = create((set)=>({
             toast.success("Log Out Successful!");
         } catch (error) {
             console.error("Log Out Error:", error);
-            toast.error(error.message);
+            toast.error(error.message   );
         }finally{
             set({isCheckingAuth: false});
         }
