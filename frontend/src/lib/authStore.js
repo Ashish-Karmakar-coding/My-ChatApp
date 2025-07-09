@@ -12,7 +12,6 @@ export const useAuthStore = create((set)=>({
 
     checkAuth: async () => {
         set({isCheckingAuth: true});
-        // Simulate API call
         try {
             const response = await axiosInstance.get('/users/check-user');
             set({authUser: response.data, isCheckingAuth: false});
