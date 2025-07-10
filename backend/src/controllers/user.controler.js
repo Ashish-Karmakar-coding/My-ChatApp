@@ -142,21 +142,7 @@ const updateProfile = async (req, res) => {
 }
 const checkUser = (req, res) => {
     try {
-        const user = req.user; // Assuming user is set by tokenCheck middleware
-        if (!user) {
-            return res.status(401).json({
-                message: "User not authenticated"
-            });
-        }
-        return res.status(200).json({
-            message: "User is authenticated",
-            user: {
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                profilePicture: user.profilePicture
-            }
-        });
+        return res.status(200).json(req.user); // Return the user object
     } catch (error) {
         throw new Error("Error in checkUser : ", error.message);
     }
