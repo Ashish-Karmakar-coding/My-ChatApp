@@ -1,4 +1,4 @@
-import HomeSkele from "../skeletons/homeSkele.jsx";
+// import HomeSkele from "../skeletons/homeSkele.jsx";
 import SideBar from "../components/SideBar.jsx";
 import Header from "../components/header.jsx";
 
