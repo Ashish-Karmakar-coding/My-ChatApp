@@ -1,8 +1,7 @@
 import HomeSkele from "../skeletons/homeSkele.jsx";
 import SideBar from "../components/SideBar.jsx";
-import Header from "../components/header.jsx";
 import useChatstore from "../lib/useChatStore.js";
-import messageComponent from "../components/message.jsx";
+import messageComponent from "../components/chatContainer.jsx";
 
 export default function HomePage() {
 

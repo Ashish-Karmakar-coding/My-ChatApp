@@ -1,7 +1,6 @@
 import {create} from 'zustand';
 import {axiosInstance} from '../axios/axios.js';
 import {toast} from 'react-hot-toast';
-import { getMessages } from '../../../backend/src/controllers/message.controller.js';
 
 export const useChatStore = create((set) => ({
     messages :[],
