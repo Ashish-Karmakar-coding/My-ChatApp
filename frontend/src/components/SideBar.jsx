@@ -1,7 +1,7 @@
 import {useEffect } from "react";
 import useChatStore from "../lib/useChatStore.js";
 import SidebarSkeleton from "../skeletons/SideBarSkele.jsx";
-
+import avatar from "../assets/avatar.jpg"; // Assuming you have a default avatar image
 function SideBar() {
   const { users, getUsers, setSelectedUser, selectedUser, isLoadingUsers } = useChatStore();
 
@@ -23,7 +23,7 @@ function SideBar() {
           <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700 transition"
           onClick={() => setSelectedUser(user)}>
             <img
-              src={user.profilePicture || "/avatar.png"}
+              src={user.profilePicture || avatar}
 
               alt="User"
               className="w-10 h-10 rounded-full object-cover border-2 border-purple-600"
