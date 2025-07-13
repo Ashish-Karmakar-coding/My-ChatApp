@@ -1,17 +1,16 @@
-import { use, useEffect } from "react";
+import {useEffect } from "react";
 import useChatStore from "../lib/useChatStore.js";
 import SidebarSkeleton from "../skeletons/SideBarSkele.jsx";
 
 function SideBar() {
-  const { users, getUsers, setSelectedUser, selectedUser, isLoadingUsers } =
-    useChatStore();
+  const { users, getUsers, setSelectedUser, selectedUser, isLoadingUsers } = useChatStore();
 
   const onlineUsers = [];   
 
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
-
+  }, []);
+  
   if (isLoadingUsers) {
     return <SidebarSkeleton />;
   }
@@ -25,7 +24,7 @@ function SideBar() {
           onClick={() => setSelectedUser(user)}>
             <img
               src={user.profilePicture || "/avatar.png"}
-              
+
               alt="User"
               className="w-10 h-10 rounded-full object-cover border-2 border-purple-600"
             />
