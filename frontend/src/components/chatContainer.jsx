@@ -1,6 +1,6 @@
 import React from 'react'
 
-const messageComponent = () => {
+const chatContailner = () => {
   return (
     <div>
       hi
@@ -8,4 +8,4 @@ const messageComponent = () => {
   )
 }
 
-export default messageComponent
+export default chatContailner

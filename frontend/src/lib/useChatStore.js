@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {axiosInstance} from '../axios/axios.js';
 import {toast} from 'react-hot-toast';
 
-export const useChatStore = create((set) => ({
+const useChatStore = create((set) => ({
     messages :[],
     users : [],
 
@@ -38,3 +38,5 @@ export const useChatStore = create((set) => ({
 
 
 }))
+
+export default useChatStore;

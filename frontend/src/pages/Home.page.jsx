@@ -1,7 +1,7 @@
 import HomeSkele from "../skeletons/homeSkele.jsx";
 import SideBar from "../components/SideBar.jsx";
 import useChatstore from "../lib/useChatStore.js";
-import messageComponent from "../components/chatContainer.jsx";
+import chatContailner from "../components/chatContainer.jsx";
 
 export default function HomePage() {
 
@@ -12,6 +12,7 @@ export default function HomePage() {
   return (
     <div className="flex bg-gray-900 min-h-[92dvh]">
       <SideBar />
+      {!selectedUser ? <HomeSkele/>:<chatContailner/>}
        
     </div>
   );
