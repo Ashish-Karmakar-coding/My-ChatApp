@@ -6,7 +6,7 @@ function SideBar() {
   const { users, getUsers, setSelectedUser, selectedUser, isLoadingUsers } =
     useChatStore();
 
-  const onlineUsers = [];
+  const onlineUsers = [];   
 
   useEffect(() => {
     getUsers();
@@ -25,6 +25,7 @@ function SideBar() {
           onClick={() => setSelectedUser(user)}>
             <img
               src={user.profilePicture || "/avatar.png"}
+              
               alt="User"
               className="w-10 h-10 rounded-full object-cover border-2 border-purple-600"
             />
