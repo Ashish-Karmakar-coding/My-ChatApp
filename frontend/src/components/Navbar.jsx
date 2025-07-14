@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../lib/authStore.js";
 
 export default function Navbar() {
-  const { logout } = useAuthStore();
+  const { logout ,authUser } = useAuthStore();
   const handleLogout = (e) => {
     e.preventDefault();
     logout();
@@ -30,7 +30,6 @@ export default function Navbar() {
           </svg>
           MyChatApp
         </Link>
-        {/* Nav Links */}
         <div className="flex items-center gap-6">
           <Link to="/profile" className="hover:text-purple-400 transition">
             Profile
