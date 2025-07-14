@@ -1,12 +1,36 @@
-# React + Vite
+# 💬 Simple ChatApp (React + Express + MongoDB)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack chatting web application built using **React.js** for the frontend, **Express.js** for the backend, and **MongoDB** for the database. Users can register, log in, and send messages. This project is a great starting point for learning full-stack development and integrating frontend with backend and database.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🔐 User authentication (Login / Signup)
+- 💬 Simple chat interface
+- 🧠 Stores users and messages in MongoDB
+- ⚛️ React frontend with protected routes
+- 📡 RESTful API communication (via Axios)
+- 🧑‍💻 Express backend with modular routing
+- 📂 MongoDB (via Mongoose) for data persistence
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- React.js
+- React Router DOM
+- Axios
+- Context API or LocalStorage
+
+**Backend:**
+- Node.js
+- Express.js
+- Mongoose (MongoDB ODM)
+- CORS & dotenv
+- bcrypt.js (for password hashing)
+- JSON Web Token (JWT)
+
+**Database:**
+- MongoDB Atlas
