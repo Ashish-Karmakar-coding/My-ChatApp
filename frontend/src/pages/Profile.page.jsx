@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import { useAuthStore } from "../lib/authStore.js";
+import avatar from "../assets/avatar.jpg"; // Assuming you have a default avatar image
+
 
 export default function ProfilePage() {
   const fileInputRef = useRef(null);
 
-  const { logout } = useAuthStore();
+  const { logout , authUser } = useAuthStore();
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ export default function ProfilePage() {
           {/* Profile Picture with Camera Button */}
           <div className="relative mb-4">
             <img
-              src="https://i.pravatar.cc/150?img=13"
+              src={avatar}
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-gray-700 object-cover"
             />
@@ -31,7 +33,7 @@ export default function ProfilePage() {
               type="button"
               className="absolute bottom-2 right-2 bg-purple-600 hover:bg-purple-700 p-2 rounded-full shadow-lg border-2 border-white transition"
               title="Change profile picture"
-              onClick={handleCameraClick}
+              onClick={handleCameraClick || authUser.profilePicture}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,18 +58,18 @@ export default function ProfilePage() {
             />
           </div>
           {/* Username */}
-          <h2 className="text-2xl font-bold mb-1">Ashish Karmakar</h2>
+          <h2 className="text-2xl font-bold mb-1">{authUser.username  }</h2>
           <p className="text-gray-400 mb-4 text-center">Online</p>
 
           {/* User Info */}
           <div className="w-full bg-gray-700 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-sm">Email:</span>
-              <span className="font-medium">ashish@example.com</span>
+              <span className="font-medium">{authUser.email}</span>
             </div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-sm">Username:</span>
-              <span className="font-medium">@ashishk</span>
+              <span className="font-medium">{authUser.username}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-400 text-sm">Status:</span>
