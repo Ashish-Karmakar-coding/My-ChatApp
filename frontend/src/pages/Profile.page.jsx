@@ -1,21 +1,32 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useAuthStore } from "../lib/authStore.js";
 import avatar from "../assets/avatar.jpg"; // Assuming you have a default avatar image
+import { Camera } from "lucide-react";
 
 
 export default function ProfilePage() {
   const fileInputRef = useRef(null);
 
-  const { logout , authUser } = useAuthStore();
+  const { logout, authUser, updateProfile, isUpdatingProfile } = useAuthStore();
+  const [selectedImg, setSelectedImg] = useState(null);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-
+  const handleLogout = () => {
     logout();
   };
 
-  const handleCameraClick = () => {
-    fileInputRef.current.click();
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      setSelectedImg(base64Image);
+      await updateProfile({ profilePic: base64Image });
+    };
   };
 
   return (
@@ -23,42 +34,41 @@ export default function ProfilePage() {
       <div className="max-w-md w-full bg-gray-800 text-white rounded-2xl shadow-2xl p-8">
         <div className="flex flex-col items-center">
           {/* Profile Picture with Camera Button */}
-          <div className="relative mb-4">
-            <img
-              src={avatar}
-              alt="Profile"
-              className="w-32 h-32 rounded-full border-4 border-gray-700 object-cover"
-            />
-            <button
-              type="button"
-              className="absolute bottom-2 right-2 bg-purple-600 hover:bg-purple-700 p-2 rounded-full shadow-lg border-2 border-white transition"
-              title="Change profile picture"
-              onClick={handleCameraClick || authUser.profilePicture}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2a2.828 2.828 0 11-4-4 2.828 2.828 0 014 4zM21 21H3v-2a4 4 0 014-4h10a4 4 0 014 4v2z"
-                />
-              </svg>
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              ref={fileInputRef}
-            />
+            <div className="flex flex-col items-center gap-4">
+            <div className="relative">
+              <img
+                src={selectedImg || authUser.profilePic || "/avatar.png"}
+                alt="Profile"
+                className="size-32 rounded-full object-cover border-4 "
+              />
+              <label
+  htmlFor="avatar-upload"
+  className={`
+    absolute bottom-0 right-0
+    bg-gray-700 hover:bg-gray-600
+    w-10 h-10 rounded-full flex items-center justify-center cursor-pointer
+    transition-all duration-200
+    ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
+  `}
+>
+  <Camera className="w-5 h-5 text-white" />
+  <input
+    type="file"
+    id="avatar-upload"
+    className="hidden"
+    accept="image/*"
+    onChange={handleImageUpload}
+    disabled={isUpdatingProfile}
+  />
+</label>
+
+            </div>
+            <p className="text-sm text-zinc-400">
+              {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+            </p>
           </div>
           {/* Username */}
-          <h2 className="text-2xl font-bold mb-1">{authUser.username  }</h2>
+          <h2 className="text-2xl font-bold mb-1">{authUser.username}</h2>
           <p className="text-gray-400 mb-4 text-center">Online</p>
 
           {/* User Info */}
@@ -79,9 +89,6 @@ export default function ProfilePage() {
 
           {/* Action Buttons */}
           <div className="flex space-x-4 w-full">
-            <button className="flex-1 bg-purple-600 hover:bg-purple-700 rounded-full px-6 py-2 font-semibold transition">
-              Edit Profile
-            </button>
             <button
               className="flex-1 bg-gray-700 hover:bg-gray-600 rounded-full px-6 py-2 font-semibold transition"
               onClick={handleLogout}
