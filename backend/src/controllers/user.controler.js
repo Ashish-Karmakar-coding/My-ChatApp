@@ -123,17 +123,9 @@ const updateProfile = async (req, res) => {
     try {
         
         const uploadResponse = await cloudinary.uploader.upload(profilePicture)
-        if (!uploadResponse || !uploadResponse.secure_url) {
-            return res.status(500).json({
-                message: "Error uploading profile picture"
-            });
-        }
+        const updateUser = await User.findByIdAndUpdate(userId,{profilePicture: uploadResponse.secure_url},{new:true}); 
 
-        const updateUser = User.findByIdAndUpdate(userId,{profilePicture: uploadResponse.secure_url},{new:true}); 
-
-        return res.status(200).json({updateUser,
-            message: "Profile updated successfully",
-        })
+        return res.status(200).json(updateUser)
 
     } catch (error) {
         throw new Error("Error in updateProfile : ", error.message);

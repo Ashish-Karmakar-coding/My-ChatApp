@@ -3,7 +3,6 @@ import { useAuthStore } from "../lib/authStore.js";
 import avatar from "../assets/avatar.jpg"; // Assuming you have a default avatar image
 import { Camera } from "lucide-react";
 
-
 export default function ProfilePage() {
   const fileInputRef = useRef(null);
 
@@ -25,7 +24,7 @@ export default function ProfilePage() {
     reader.onload = async () => {
       const base64Image = reader.result;
       setSelectedImg(base64Image);
-      await updateProfile({ profilePic: base64Image });
+      await updateProfile({ profilePicture: base64Image });
     };
   };
 
@@ -34,37 +33,38 @@ export default function ProfilePage() {
       <div className="max-w-md w-full bg-gray-800 text-white rounded-2xl shadow-2xl p-8">
         <div className="flex flex-col items-center">
           {/* Profile Picture with Camera Button */}
-            <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImg || authUser.profilePic || "/avatar.png"}
+                src={selectedImg || authUser.profilePic || avatar}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4 "
               />
               <label
-  htmlFor="avatar-upload"
-  className={`
+                htmlFor="avatar-upload"
+                className={`
     absolute bottom-0 right-0
     bg-gray-700 hover:bg-gray-600
     w-10 h-10 rounded-full flex items-center justify-center cursor-pointer
     transition-all duration-200
     ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
   `}
->
-  <Camera className="w-5 h-5 text-white" />
-  <input
-    type="file"
-    id="avatar-upload"
-    className="hidden"
-    accept="image/*"
-    onChange={handleImageUpload}
-    disabled={isUpdatingProfile}
-  />
-</label>
-
+              >
+                <Camera className="w-5 h-5 text-white" />
+                <input
+                  type="file"
+                  id="avatar-upload"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={isUpdatingProfile}
+                />
+              </label>
             </div>
             <p className="text-sm text-zinc-400">
-              {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+              {isUpdatingProfile
+                ? "Uploading..."
+                : "Click the camera icon to update your photo"}
             </p>
           </div>
           {/* Username */}
