@@ -76,11 +76,12 @@ const sendMessage = async (req, res) => {
       photo: imgURL,
     });
 
+    await newMessage.save();
+    
     if (!newMessage) {
       return res.status(500).json({ message: "Error creating message" });
     }
 
-    await newMessage.save();
 
     return res.status(200).json({
       message: "Message sent successfully",
