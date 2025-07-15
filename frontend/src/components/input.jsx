@@ -1,6 +1,6 @@
 import React from 'react'
 
-const inputComp = () => {
+const InputComp = () => {
   return (
     <div>
       input ...
@@ -8,4 +8,4 @@ const inputComp = () => {
   )
 }
 
-export default inputComp
+export default InputComp

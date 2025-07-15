@@ -22,6 +22,7 @@ function SideBar() {
         {users.map((user) => (
           <button className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700 transition 
               ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}`}
+          key={user._id}
           onClick={() => setSelectedUser(user)}>
             <img
               src={user.profilePicture || avatar}

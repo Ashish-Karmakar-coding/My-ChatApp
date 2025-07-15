@@ -6,9 +6,7 @@ import  SettingPage  from "./pages/Settings.page.jsx";
 import  ProfilePage  from "./pages/Profile.page.jsx";
 import  HomePage  from "./pages/Home.page.jsx";
 import Navbar from "./components/Navbar.jsx";
-import SideBar from "./components/SideBar.jsx";
 
-import MessageSkele from "./skeletons/messageSkele.jsx";
 
 import { Loader } from "lucide-react";
 
