@@ -111,21 +111,25 @@ const logout = (req,res) => {
 }
 const updateProfile = async (req, res) => {
 
-    const {profilePicture} = req.body;
-    const userId = req.user._id
-
-    if(!profilePicture) {
-        return res.status(400).json({
-            message: "Profile picture is required to update the profile"
-        });
-    }
 
     try {
+        const {profilePicture} = req.body;
+        const userId = req.user._id
+    
+        if(!profilePicture) {
+            return res.status(400).json({
+                message: "Profile picture is required to update the profile"
+            });
+        }
         
         const uploadResponse = await cloudinary.uploader.upload(profilePicture)
-        const updateUser = await User.findByIdAndUpdate(userId,{profilePicture: uploadResponse.secure_url},{new:true}); 
+        const updateUser = await User.findByIdAndUpdate(
+            userId,
+            {profilePicture: uploadResponse.secure_url},
+            {new:true}
+        ); 
 
-        return res.status(200).json(updateUser)
+        res.status(200).json(updateUser)
 
     } catch (error) {
         throw new Error("Error in updateProfile : ", error.message);
