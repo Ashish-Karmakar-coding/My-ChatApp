@@ -56,13 +56,6 @@ export default function MessageSkele() {
                 </div>
             </div>
 
-            {/* Input area skeleton */}
-            <div className="border-t border-gray-700 p-4 bg-gray-800">
-                <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-gray-700 rounded-full h-12 animate-pulse"></div>
-                    <div className="w-12 h-12 bg-purple-600 rounded-full animate-pulse"></div>
-                </div>
-            </div>
 
             <style>
                 {`
