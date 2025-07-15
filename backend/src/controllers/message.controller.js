@@ -10,7 +10,6 @@ const getUserForSideBar = async (req, res) => {
     if (!users) {
       return res.status(404).json({ message: "No users found" });
     }
-
     return res.status(200).json(users);
   } catch (error) {
     throw new Error("Error in getting user for sidebar");
@@ -38,9 +37,7 @@ const getMessages = async (req, res) => {
       return res.status(404).json({ message: "No messages found" });
     }
 
-    return res.status(200).json({
-      messages: Allmessages,
-    });
+    return res.status(200).json(Allmessages);
   } catch (error) {
     throw new error("Error in getting messages");
   }

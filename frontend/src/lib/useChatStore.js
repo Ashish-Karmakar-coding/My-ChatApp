@@ -44,9 +44,8 @@ const useChatStore = create((set,get) => ({
       toast.error(error.response.data.message);
     }
     },
-    setSelectedUser: (userId) => {
-        set({selectedUser: userId});
-    },
+    setSelectedUser: (selectedUser) => set({ selectedUser }),
+
 
 
 }))
