@@ -15,6 +15,11 @@ app.get('/',(req,res)=>{
     res.send("Welcome to the Chat App Backend")
 })
 
+app.use(cors({
+    origin: "http://localhost:5173", // Replace with your frontend URL
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+}));
+
 app.use(express.json()) // Middleware to parse JSON bodies
 app.use(cookieParser()) // Middleware to parse cookies
 
@@ -22,10 +27,6 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 
-app.use(cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-}));
 
 app.use("/api/users", userRoutes) // User routes
 app.use("/api/messages",messageRoutes) // Message routes
