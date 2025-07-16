@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import InputComp from './input.jsx'
 import Header from './header.jsx'
 import MessageSkele from '../skeletons/messageSkele.jsx'
@@ -14,18 +14,17 @@ const ChatContainer = () => {
   const {authUser} = useAuthStore();
 
   useEffect(() => {
-    getMessages(selectedUser);
-  },[selectedUser,getMessages])
-console.log(selectedUser)
+    getMessages(selectedUser._id);
+  },[selectedUser._id,getMessages])
 
 
   return (
     <>
-    <div className='flex flex-col w-full h-full bg-gray-800 p-4 '>
+    <div className='flex flex-1 flex-col overflow-auto w-full h-full bg-gray-800 p-4 '>
 
       <Header />
-       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
+       <div className="flex-1 h-full overflow-y-auto p-4 space-y-4">
+        {(messages ?? []).map((message) => (
           <div
             key={message._id}
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
@@ -49,9 +48,9 @@ console.log(selectedUser)
               </time>
             </div>
             <div className="chat-bubble flex flex-col">
-              {message.image && (
+              {message.photo && (
                 <img
-                  src={message.image}
+                  src={message.photo}
                   alt="Attachment"
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />

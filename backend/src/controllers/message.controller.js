@@ -20,24 +20,18 @@ const getMessages = async (req, res) => {
     const { id: senderId } = req.params;
     const myId = req.user._id;
 
-    if (!senderId || !myId) {
-      return res
-        .status(400)
-        .json({ message: "Sender ID or User ID is missing" });
-    }
-
-    const Allmessages = await Message.find({
+    const messages = await Message.find({
       $or: [
         { senderId: myId, reciverId: senderId },
         { senderId: senderId, reciverId: myId },
       ],
     });
 
-    if (!Allmessages) {
+    if (!messages) {
       return res.status(404).json({ message: "No messages found" });
     }
 
-    return res.status(200).json(Allmessages);
+    res.status(200).json(messages);
   } catch (error) {
     throw new error("Error in getting messages");
   }
