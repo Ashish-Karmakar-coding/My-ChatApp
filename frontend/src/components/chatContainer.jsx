@@ -1,53 +1,55 @@
-import { useEffect, useRef } from "react";
-import InputComp from './input.jsx'
-import Header from './header.jsx'
-import MessageSkele from '../skeletons/messageSkele.jsx'
-import { formatMessageTime } from '../lib/ulits.js'
-import avatar from '../assets/avatar.jpg'
-import {useAuthStore} from '../lib/authStore.js'
-
-import useChatStore from '../lib/useChatStore.js'
+import { useEffect } from "react";
+import InputComp from './input.jsx';
+import Header from './header.jsx';
+import { formatMessageTime } from '../lib/ulits.js';
+import avatar from '../assets/avatar.jpg';
+import { useAuthStore } from '../lib/authStore.js';
+import useChatStore from '../lib/useChatStore.js';
 
 const ChatContainer = () => {
-
-  const {selectedUser,messages,isLoadingMessages,getMessages} = useChatStore();
-  const {authUser} = useAuthStore();
+  const { selectedUser, messages, isLoadingMessages, getMessages } = useChatStore();
+  const { authUser } = useAuthStore();
 
   useEffect(() => {
-    getMessages(selectedUser._id);
-  },[selectedUser._id,getMessages])
-
+    if (selectedUser && selectedUser._id) {
+      getMessages(selectedUser._id);
+    }
+  }, [selectedUser, getMessages]);
 
   return (
-    <>
-    <div className='flex flex-1 flex-col overflow-auto w-full h-full bg-gray-800 p-4 '>
-
+    <div className="flex flex-col w-full bg-gray-800">
       <Header />
-       <div className="flex-1 h-full overflow-y-auto p-4 space-y-4">
+
+      {/* Messages area */}
+      <div
+        className="overflow-y-auto p-4 space-y-4"
+        style={{ height: "calc(100vh - 64px - 80px)" }} 
+        // 64px for header, 80px for input (adjust as needed)
+      >
         {(messages ?? []).map((message) => (
           <div
             key={message._id}
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
-            
           >
-            <div className=" chat-image avatar">
-              <div className="size-10 rounded-full border">
+            <div className="chat-image avatar">
+              <div className="size-10 rounded-full border overflow-hidden">
                 <img
                   src={
                     message.senderId === authUser._id
                       ? authUser.profilePicture || avatar
-                      : selectedUser.profilePicture || avatar
+                      : selectedUser?.profilePicture || avatar
                   }
+                  className="rounded-full object-cover w-full h-full"
                   alt="profile pic"
                 />
               </div>
             </div>
             <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">
+              <time className="text-xs opacity-50 ml-1 text-zinc-100">
                 {formatMessageTime(message.createdAt)}
               </time>
             </div>
-            <div className="chat-bubble flex flex-col">
+            <div className="chat-bubble flex flex-col text-zinc-100">
               {message.photo && (
                 <img
                   src={message.photo}
@@ -61,11 +63,12 @@ const ChatContainer = () => {
         ))}
       </div>
 
-      <InputComp/>
+      {/* Fixed input at bottom */}
+      <div className="fixed bottom-0 left-55 right-0 bg-gray-800 border-t border-gray-700 p-4">
+  <InputComp />
+</div>
     </div>
+  );
+};
 
-    </>
-  )
-}
-
-export default ChatContainer
+export default ChatContainer;
