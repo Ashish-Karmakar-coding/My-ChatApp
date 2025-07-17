@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import InputComp from './input.jsx';
 import Header from './header.jsx';
-import { formatMessageTime } from '../lib/ulits.js';
+import { formatMessageTime } from '../lib/utils.js';
 import avatar from '../assets/avatar.jpg';
 import { useAuthStore } from '../lib/authStore.js';
 import useChatStore from '../lib/useChatStore.js';
@@ -15,15 +15,16 @@ const ChatContainer = () => {
       getMessages(selectedUser._id);
     }
   }, [selectedUser, getMessages]);
+  
 
   return (
-    <div className="flex flex-col w-full bg-gray-800">
+    <div className=" flex flex-col w-full bg-gray-800">
       <Header />
 
       {/* Messages area */}
       <div
         className="overflow-y-auto p-4 space-y-4"
-        style={{ height: "calc(100vh - 64px - 80px)" }} 
+        style={{ height: "calc(100vh - 64px - 115px)" }} 
         // 64px for header, 80px for input (adjust as needed)
       >
         {(messages ?? []).map((message) => (

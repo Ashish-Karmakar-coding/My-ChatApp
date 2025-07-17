@@ -48,7 +48,7 @@ const InputComp = () => {
   };
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-0.5 w-full">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
@@ -73,7 +73,7 @@ const InputComp = () => {
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md text-zinc-400"
+            className="w-full h-1rem input input-bordered rounded-lg input-sm sm:input-md text-zinc-400"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
