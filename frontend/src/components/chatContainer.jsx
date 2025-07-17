@@ -27,7 +27,7 @@ const ChatContainer = () => {
         style={{ height: "calc(100vh - 64px - 115px)" }} 
         // 64px for header, 80px for input (adjust as needed)
       >
-        {(messages ?? []).map((message) => (
+        {messages.map((message) => (
           <div
             key={message._id}
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
