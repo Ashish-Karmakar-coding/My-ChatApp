@@ -13,21 +13,87 @@ export default function ProfilePage() {
     logout();
   };
 
-  const handleImageUpload = async (e) => {
+  // Function to compress image
+  const compressImage = (file, maxWidth = 800, quality = 0.7) => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions while maintaining aspect ratio
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxWidth) {
+            width = (width * maxWidth) / height;
+            height = maxWidth;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert to base64 with compression
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressedBase64);
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+ const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
+    console.log('📁 Original file:', {
+        name: file.name,
+        size: file.size,
+        type: file.type
+    });
 
-    reader.readAsDataURL(file);
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+    }
 
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      console.log(base64Image);
-      setSelectedImg(base64Image);
-      await updateProfile({ profilePicture: base64Image });
-    };
-  };
+    // Validate file size (5MB limit before compression)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+    }
+
+    try {
+        // Compress the image
+        const compressedBase64 = await compressImage(file, 400, 0.6); // Smaller size, lower quality
+        
+        console.log('📦 Compressed image info:', {
+            originalSize: file.size,
+            compressedSize: Math.round((compressedBase64.length * 3) / 4),
+            base64Length: compressedBase64.length,
+            preview: compressedBase64.substring(0, 50) + '...'
+        });
+        
+        setSelectedImg(compressedBase64);
+        
+        console.log('🚀 Sending to server...');
+        const result = await updateProfile({ profilePicture: compressedBase64 });
+        console.log('✅ Server response:', result);
+        
+    } catch (error) {
+        console.error('💥 Error processing image:', error);
+    }
+};
 
   return (
     <div className="min-h-[92dvh] bg-gray-900 flex items-center justify-center p-6">
