@@ -18,10 +18,12 @@ import {Toaster} from "react-hot-toast";
 
 export default function App() {
 
-  const {authUser,checkAuth , isCheckingAuth} = useAuthStore();
+  const {authUser,checkAuth , isCheckingAuth ,onlineUsers} = useAuthStore();
   useEffect(() => {
     checkAuth()
   },[]); 
+
+  console.log("Online Users:", onlineUsers);
 
   if(isCheckingAuth && !authUser) {
     return (
