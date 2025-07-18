@@ -49,8 +49,8 @@ const useChatStore = create((set, get) => ({
     }
   },
   subscribeToMessages: () => {
-    const { selectedUser, messages } = get();
-    if (selectedUser) return;
+    const { selectedUser } = get();
+    if (!selectedUser) return; // Fixed: should be !selectedUser
 
     const socket = useAuthStore.getState().socket;
 
@@ -59,6 +59,8 @@ const useChatStore = create((set, get) => ({
         newMessage.senderId === selectedUser._id;
       if (!isMessageSentFromSelectedUser) return;
 
+      // Get fresh messages to avoid stale closure
+      const { messages } = get();
       set({
         messages: [...messages, newMessage],
       });
