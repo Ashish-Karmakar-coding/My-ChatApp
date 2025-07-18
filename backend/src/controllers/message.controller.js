@@ -1,6 +1,7 @@
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 import { cloudinary } from "../utils/cloudinary.util.js";
+import {getReceiverSocketId} from "../utils/Soket.js";
 
 const getUserForSideBar = async (req, res) => {
   const myId = req.user._id;
@@ -68,6 +69,11 @@ const sendMessage = async (req, res) => {
     });
 
     await newMessage.save();
+
+    const receiverSocketId = getReceiverSocketId(reciverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
     
     if (!newMessage) {
       return res.status(500).json({ message: "Error creating message" });

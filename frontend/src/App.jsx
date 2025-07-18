@@ -6,13 +6,12 @@ import  SettingPage  from "./pages/Settings.page.jsx";
 import  ProfilePage  from "./pages/Profile.page.jsx";
 import  HomePage  from "./pages/Home.page.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { useAuthStore } from "./lib/authStore.js";
 
 
 import { Loader } from "lucide-react";
 
 import {Routes , Route, Navigate} from "react-router-dom";
-
-import {useAuthStore} from "./lib/authStore.js";
 
 import {Toaster} from "react-hot-toast";
 
@@ -22,8 +21,6 @@ export default function App() {
   useEffect(() => {
     checkAuth()
   },[]); 
-
-  console.log("Online Users:", onlineUsers);
 
   if(isCheckingAuth && !authUser) {
     return (
