@@ -5,10 +5,10 @@ import cookieParser from 'cookie-parser';
 import userRoutes from './routers/user.router.js';
 import messageRoutes from './routers/message.router.js';
 import cors from 'cors';
+import {server,app} from './utils/Soket.js';
 
 dotenv.config()
 
-const app = express()
 const PORT = process.env.PORT;
 
 app.get('/',(req,res)=>{
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use("/api/users", userRoutes) // User routes
 app.use("/api/messages",messageRoutes) // Message routes
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     connectDB()
     console.log("The server is running .....")
 })
