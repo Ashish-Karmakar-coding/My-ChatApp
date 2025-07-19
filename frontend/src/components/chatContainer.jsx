@@ -5,6 +5,7 @@ import { formatMessageTime } from "../lib/utils.js";
 import avatar from "../assets/avatar.jpg";
 import { useAuthStore } from "../lib/authStore.js";
 import useChatStore from "../lib/useChatStore.js";
+import MessageSkeleton from "../skeletons/messageSkele.jsx";
 
 const ChatContainer = () => {
   const {
@@ -13,6 +14,7 @@ const ChatContainer = () => {
     getMessages,
     subscribeToMessages,
     unsubscribeFromMessages,
+    isLoadingMessages
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
@@ -36,6 +38,10 @@ const ChatContainer = () => {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  if (isLoadingMessages) {
+    return <MessageSkeleton />;
+  }
 
   return (
     <div className=" flex flex-col w-full bg-gray-800">

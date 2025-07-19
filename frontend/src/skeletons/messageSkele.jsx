@@ -1,89 +1,28 @@
-export default function MessageSkele() {
-    return (
-        <div className="flex-1 flex flex-col bg-gray-900 h-[92dvh]">
-            {/* Messages Container */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-                {/* Incoming message skeleton */}
-                <div className="flex items-start gap-3 max-w-[70%]">
-                    <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
-                    <div className="flex flex-col gap-2">
-                        <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 w-48 h-12 animate-pulse"></div>
-                        <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 w-32 h-10 animate-pulse"></div>
-                    </div>
-                </div>
+const MessageSkeleton = () => {
+  // Create an array of 6 items for skeleton messages
+  const skeletonMessages = Array(6).fill(null);
 
-                {/* Outgoing message skeleton */}
-                <div className="flex items-start gap-3 max-w-[70%] ml-auto">
-                    <div className="flex flex-col gap-2">
-                        <div className="bg-purple-600 rounded-2xl rounded-br-none px-4 py-3 w-40 h-12 animate-pulse"></div>
-                        <div className="bg-purple-600 rounded-2xl rounded-br-none px-4 py-3 w-56 h-10 animate-pulse"></div>
-                    </div>
-                </div>
-
-                {/* Another incoming message */}
-                <div className="flex items-start gap-3 max-w-[70%]">
-                    <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
-                    <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 w-36 h-10 animate-pulse"></div>
-                </div>
-
-                {/* Typing indicator */}
-                <div className="flex items-start gap-3 max-w-[70%]">
-                    <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
-                    <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3">
-                        <div className="flex items-center gap-1">
-                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* More message skeletons for variety */}
-                <div className="flex items-start gap-3 max-w-[70%] ml-auto">
-                    <div className="bg-purple-600 rounded-2xl rounded-br-none px-4 py-3 w-28 h-10 animate-pulse"></div>
-                </div>
-
-                <div className="flex items-start gap-3 max-w-[70%]">
-                    <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
-                    <div className="flex flex-col gap-2">
-                        <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 w-52 h-12 animate-pulse"></div>
-                        <div className="bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 w-44 h-10 animate-pulse"></div>
-                    </div>
-                </div>
-
-                <div className="flex items-start gap-3 max-w-[70%] ml-auto">
-                    <div className="bg-purple-600 rounded-2xl rounded-br-none px-4 py-3 w-64 h-12 animate-pulse"></div>
-                </div>
+  return (
+    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {skeletonMessages.map((_, idx) => (
+        <div key={idx} className={`chat ${idx % 2 === 0 ? "chat-start" : "chat-end"}`}>
+          <div className="chat-image avatar">
+            <div className="size-10 rounded-full">
+              <div className="skeleton w-full h-full rounded-full" />
             </div>
+          </div>
 
+          <div className="chat-header mb-1">
+            <div className="skeleton h-4 w-16" />
+          </div>
 
-            <style>
-                {`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 8px;
-                    background: #2d3748;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: #2d3748;
-                    border-radius: 8px;
-                }
-                .custom-scrollbar {
-                    scrollbar-width: thin;
-                    scrollbar-color: #2d3748 #2d3748;
-                }
-                @keyframes bounce {
-                    0%, 80%, 100% {
-                        transform: scale(0);
-                    }
-                    40% {
-                        transform: scale(1);
-                    }
-                }
-                .animate-bounce {
-                    animation: bounce 1.4s infinite ease-in-out both;
-                }
-                `}
-            </style>
+          <div className="chat-bubble bg-transparent p-0">
+            <div className="skeleton h-16 w-[200px]" />
+          </div>
         </div>
-    );
-}
+      ))}
+    </div>
+  );
+};
+
+export default MessageSkeleton;
