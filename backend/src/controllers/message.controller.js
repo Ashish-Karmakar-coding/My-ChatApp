@@ -74,15 +74,8 @@ const sendMessage = async (req, res) => {
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
-    
-    if (!newMessage) {
-      return res.status(500).json({ message: "Error creating message" });
-    }
 
-
-    return res.status(200).json({
-      message: "Message sent successfully",
-    });
+    res.status(200).json(newMessage);
   } catch (error) {
     throw new Error("Error in sending message");
   }
