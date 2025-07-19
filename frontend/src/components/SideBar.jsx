@@ -7,7 +7,7 @@ function SideBar() {
   const { users, getUsers, setSelectedUser, selectedUser, isLoadingUsers } =
     useChatStore();
 
-  const { onlineUsers } = useAuthStore();
+  const { onlineUsers, } = useAuthStore();
 
   useEffect(() => {
     getUsers();
