@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "../lib/authStore.js";
 import { Link } from "react-router-dom";
-import { Loader,Eye, EyeOff, Lock, Mail, MessageSquare, ShowerHead } from "lucide-react";
+import { Loader, Loader2, Eye, EyeOff, Lock, Mail, MessageSquare, ShowerHead } from "lucide-react";
 import {toast} from "react-hot-toast";
 
 import backgroundImg from "../assets/background.jpg";
@@ -46,9 +46,7 @@ const handleLogin = (e)=>{
             <p className="text-gray-400 mt-2 text-center md:text-left">
               Log in to get started
             </p>
-            <form onSubmit={handleLogin
-
-            } className="mt-8 space-y-4">
+            <form onSubmit={handleLogin} className="mt-8 space-y-4">
               
               <div>
                 <input
@@ -58,33 +56,45 @@ const handleLogin = (e)=>{
                   onChange={(e) => setData({ ...data, email: e.target.value })}
                 />
               </div>
-              <div>
+              
+              <div className="relative">
                 <input
-                  type={"password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  className="w-full px-4 py-3 border border-gray-700 bg-gray-700 text-white rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                  className="w-full px-4 py-3 border border-gray-700 bg-gray-700 text-white rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition pr-12"
                   onChange={(e) =>
                     setData({ ...data, password: e.target.value })
                   }
                 />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
+                  )}
+                </button>
               </div>
-              <button
-                type="submit"
-                className="w-full bg-purple-600 text-white font-semibold py-3 rounded-lg hover:bg-purple-700 transition"
-                disabled = {isLoggingIn}
+              
+              <button 
+                type="submit" 
+                className="w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
+                disabled={isLoggingIn}
               >
-                {
-                  isLoggingIn? (
-                    <>
-                    <Loader className="size-5 animate-spin"/>
-                    loading...
-                    </>
-                  ):(
-                    "Log In"
-                  )
-              }
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  "Sign in"
+                )}
               </button>
             </form>
+            
             <p className="text-gray-400 text-sm mt-6 text-center md:text-left">
               Don't have an account?{" "}
               <Link
@@ -109,7 +119,5 @@ const handleLogin = (e)=>{
     </>
   );
 }
-
-
 
 export default LogInPage;
