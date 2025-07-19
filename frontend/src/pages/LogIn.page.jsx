@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useAuthStore } from "../lib/authStore.js";
 import { Link } from "react-router-dom";
-import { Loader } from "lucide-react";
+import { Loader,Eye, EyeOff, Lock, Mail, MessageSquare, ShowerHead } from "lucide-react";
 import {toast} from "react-hot-toast";
 
 import backgroundImg from "../assets/background.jpg";
 
 
 function LogInPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const  [data, setData]  = useState({
     email: "",
     password: "",
@@ -59,7 +60,7 @@ const handleLogin = (e)=>{
               </div>
               <div>
                 <input
-                  type="password"
+                  type={"password"}
                   placeholder="Password"
                   className="w-full px-4 py-3 border border-gray-700 bg-gray-700 text-white rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
                   onChange={(e) =>
