@@ -31,13 +31,20 @@ app.use("/api/users", userRoutes) // User routes
 app.use("/api/messages",messageRoutes) // Message routes
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, '../frontend/dist')))
+    app.use(express.static(path.join(__dirname, '../../frontend/dist')))
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, "../frontend","dist","index.html"));
     });
 }
 
-server.listen(PORT,()=>{
+server.listen(PORT, () => {
     connectDB()
-    console.log("The server is running .....")
-})
+    console.log(`The server is running on port ${PORT}`)
+}).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.log(`Port ${PORT} is already in use. Please use a different port.`);
+        process.exit(1);
+    } else {
+        console.log('Server error:', err);
+    }
+});
