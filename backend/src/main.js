@@ -7,29 +7,35 @@ import messageRoutes from './routers/message.router.js';
 import cors from 'cors';
 import {server,app} from './utils/Soket.js';
 
+import path from 'path';
+
 dotenv.config()
 
 const PORT = process.env.PORT;
+const __dirname = path.resolve();
 
 app.get('/',(req,res)=>{
     res.send("Welcome to the Chat App Backend")
 })
 
 app.use(cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
+    origin: "http://localhost:5174", // Replace with your frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
 app.use(express.json()) // Middleware to parse JSON bodies
 app.use(cookieParser()) // Middleware to parse cookies
 
-app.use(express.json({ limit: "20mb" }));
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
-
-
 
 app.use("/api/users", userRoutes) // User routes
 app.use("/api/messages",messageRoutes) // Message routes
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, '../frontend/dist')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend","dist","index.html"));
+    });
+}
 
 server.listen(PORT,()=>{
     connectDB()
