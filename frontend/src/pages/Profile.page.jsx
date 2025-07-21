@@ -20,7 +20,12 @@ export default function ProfilePage() {
   // File type validation
   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
   if (!allowedTypes.includes(file.type)) {
-    alert('Only JPEG, PNG, and WebP files are allowed');
+    toast(
+  "Only JPEG, PNG, and WebP files are allowed.",
+  {
+    duration: 6000,
+  }
+);
     return;
   }
 
