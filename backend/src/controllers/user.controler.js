@@ -123,97 +123,38 @@ const logout = (req,res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { profilePicture } = req.body;
-        const userId = req.user._id;
-
-        console.log('📝 Update profile request:', {
-            userId: userId,
-            hasProfilePicture: !!profilePicture,
-            base64Length: profilePicture ? profilePicture.length : 0
-        });
-
-        if (!profilePicture) {
+        const {profilePicture} = req.body;
+        const userId = req.user._id
+    
+        if(!profilePicture) {
             return res.status(400).json({
                 message: "Profile picture is required to update the profile"
             });
         }
-
-        // Validate base64 format
-        if (!profilePicture.startsWith('data:image/')) {
-            return res.status(400).json({
-                message: "Invalid image format. Please upload a valid image file."
-            });
-        }
-
-        // Check base64 size (rough estimate: base64 is ~33% larger than binary)
-        const estimatedSizeKB = (profilePicture.length * 3) / 4 / 1024;
-        if (estimatedSizeKB > 2048) { // 2MB limit
-            return res.status(400).json({
-                message: "Image is too large. Please compress the image and try again."
-            });
-        }
-
-        console.log('☁️  Uploading to Cloudinary...');
         
-        // Upload to Cloudinary with additional options
-        const uploadResponse = await cloudinary.uploader.upload(profilePicture, {
-            folder: "profile_pictures", // Optional: organize uploads
-            transformation: [
-                { width: 400, height: 400, crop: "fill" }, // Ensure consistent size
-                { quality: "auto:good" } // Auto quality optimization
-            ]
-        });
-
-        console.log('✅ Cloudinary upload successful:', {
-            public_id: uploadResponse.public_id,
-            secure_url: uploadResponse.secure_url
-        });
-
-        // Update user in database
-        const updatedUser = await User.findByIdAndUpdate(
+        const uploadResponse = await cloudinary.uploader.upload(profilePicture)
+        const updateUser = await User.findByIdAndUpdate(
             userId,
-            { profilePicture: uploadResponse.secure_url },
-            { new: true }
-        ).select('-password');
+            {profilePicture: uploadResponse.secure_url},
+            {new:true}
+        ).select('-password'); // Don't return password in response
 
-        if (!updatedUser) {
+        if (!updateUser) {
             return res.status(404).json({
                 message: "User not found"
             });
         }
 
-        console.log('🎉 Profile updated successfully for user:', userId);
-
-        return res.status(200).json({
-            message: "Profile updated successfully",
-            user: updatedUser
-        });
+        res.status(200).json(updateUser)
 
     } catch (error) {
-        console.error("❌ Error in updateProfile:", error);
-        
-        // Handle Cloudinary specific errors
-        if (error.name === 'Error' && error.message.includes('cloudinary')) {
-            return res.status(400).json({
-                message: "Image upload failed. Please try with a different image.",
-                error: "Cloudinary upload error"
-            });
-        }
-
-        // Handle MongoDB errors
-        if (error.name === 'CastError') {
-            return res.status(400).json({
-                message: "Invalid user ID",
-                error: "Database error"
-            });
-        }
-
+        console.error("Error in updateProfile:", error.message);
         return res.status(500).json({
             message: "Internal server error",
-            error: process.env.NODE_ENV === 'development' ? error.message : "Server error"
+            error: error.message
         });
     }
-};
+}
 
 const checkUser = (req, res) => {
     try {
