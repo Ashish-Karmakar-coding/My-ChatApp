@@ -14,19 +14,42 @@ export default function ProfilePage() {
   };
 
    const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const file = e.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
+  // File type validation
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    alert('Only JPEG, PNG, and WebP files are allowed');
+    return;
+  }
 
-    reader.readAsDataURL(file);
+  // File size validation (2MB limit) - PREVENTS 413 ERROR
+  const maxSize = 2 * 1024 * 1024; // 2MB
+  if (file.size > maxSize) {
+    alert('File size must be less than 2MB. Please compress your image.');
+    return;
+  }
 
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImg(base64Image);
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const base64Image = reader.result;
+    setSelectedImg(base64Image);
+    
+    try {
       await updateProfile({ profilePicture: base64Image });
-    };
+    } catch (error) {
+      if (error.response?.status === 413) {
+        alert('Image too large. Please use a smaller file.');
+      } else {
+        alert('Upload failed. Please try again.');
+      }
+      // Reset on error
+      setSelectedImg(null);
+    }
   };
+  reader.readAsDataURL(file);
+};
 
   return (
     <div className="min-h-[92dvh] bg-gray-900 flex items-center justify-center p-6">
