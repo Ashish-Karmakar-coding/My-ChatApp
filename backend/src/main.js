@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use(cors({
-    origin: "http://localhost:5174", 
+    origin: "http://localhost:5173", 
     credentials: true, 
 }));
 
