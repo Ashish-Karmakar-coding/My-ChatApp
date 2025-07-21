@@ -19,16 +19,16 @@ app.get('/',(req,res)=>{
 })
 
 app.use(cors({
-    origin: "http://localhost:5174", // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    origin: "http://localhost:5174", 
+    credentials: true, 
 }));
 
-app.use(express.json()) // Middleware to parse JSON bodies
-app.use(cookieParser()) // Middleware to parse cookies
+app.use(express.json()) 
+app.use(cookieParser()) 
 
 
-app.use("/api/users", userRoutes) // User routes
-app.use("/api/messages",messageRoutes) // Message routes
+app.use("/api/users", userRoutes)
+app.use("/api/messages",messageRoutes) 
 
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname, '../../frontend/dist')))
