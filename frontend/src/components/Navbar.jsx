@@ -4,8 +4,8 @@ import { useAuthStore } from "../lib/authStore.js";
 export default function Navbar() {
   const { logout ,authUser } = useAuthStore();
   const handleLogout = (e) => {
-    e.preventDefault();
-    logout();
+    e.preventDefault()
+    logout()
   };
   return (
     <nav className="bg-gray-800 text-white px-6 py-3 shadow-lg">
