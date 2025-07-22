@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { useAuthStore } from "../lib/authStore.js";
+import { Link } from "react-router-dom"
+import { useAuthStore } from "../lib/authStore.js"
 
 export default function Navbar() {
-  const { logout ,authUser } = useAuthStore();
+  const { logout ,authUser } = useAuthStore()
   const handleLogout = (e) => {
     e.preventDefault()
     logout()
