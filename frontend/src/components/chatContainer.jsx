@@ -7,6 +7,8 @@ import { useAuthStore } from "../lib/authStore.js";
 import useChatStore from "../lib/useChatStore.js";
 import MessageSkeleton from "../skeletons/messageSkele.jsx";
 
+import { motion } from "motion/react"
+
 const ChatContainer = () => {
   const {
     selectedUser,
