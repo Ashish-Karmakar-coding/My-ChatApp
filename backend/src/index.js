@@ -35,10 +35,10 @@ app.use("/api/messages",messageRoutes)
 // Increase payload size limit - ADD THIS TO YOUR SERVER FILE
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, '../../frontend/dist')))
+    app.use(express.static(path.join(__dirname, '../frontend/dist')))
     // ✅ Fixed: Added parameter name to wildcard route
-    app.get('/*path', (req, res) => {
-        res.sendFile(path.join(__dirname, "../../frontend","dist","index.html"));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend","dist","index.html"));
     });
 }
 
