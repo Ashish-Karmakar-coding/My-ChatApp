@@ -18,8 +18,5 @@
   "bugs": {
     "url": "https://github.com/Ashish-Karmakar-coding/My-ChatApp/issues"
   },
-  "homepage": "https://github.com/Ashish-Karmakar-coding/My-ChatApp#readme",
-  "dependencies": {
-    "motion": "^12.23.9"
-  }
+  "homepage": "https://github.com/Ashish-Karmakar-coding/My-ChatApp#readme"
 }
