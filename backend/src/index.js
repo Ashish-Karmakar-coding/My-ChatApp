@@ -14,10 +14,6 @@ dotenv.config()
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
-app.get('/',(req,res)=>{
-    res.send("Welcome to the Chat App Backend")
-})
-
 app.use(cors({
     origin: "http://localhost:5173", 
     credentials: true, 
