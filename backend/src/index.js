@@ -22,7 +22,7 @@ if (!process.env.MONGO_URI) {
 const __dirname = path.resolve();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.NODE_ENV === "production" ? false : "http://localhost:5173", // 'false' in production means we let the browser handle it or rely on the same-origin policy if served from same host
     credentials: true,
 }));
 
