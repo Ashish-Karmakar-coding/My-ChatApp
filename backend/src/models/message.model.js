@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';// Adjust the import path as necessary
 
 const messageSchema = new mongoose.Schema({
-    senderId:{
+    senderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    reciverId:{
+    receiverId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     text: String,
-    photo : String,
+    photo: String,
 
-},{timestamps: true})
+}, { timestamps: true })
 
 export const Message = mongoose.model('Message', messageSchema);

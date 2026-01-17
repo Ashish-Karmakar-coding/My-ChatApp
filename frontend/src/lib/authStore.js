@@ -3,7 +3,7 @@ import { axiosInstance } from "../axios/axios.js";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL = import.meta.env.MODE==="development" ? "http://localhost:5001": "/"; // Replace with your server URL
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/"; // Replace with your server URL
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -11,7 +11,7 @@ export const useAuthStore = create((set, get) => ({
   isSigningUp: false,
   isUpdatingProfile: false,
 
-  onlineUsers:[],
+  onlineUsers: [],
 
   isCheckingAuth: true,
 
@@ -30,7 +30,7 @@ export const useAuthStore = create((set, get) => ({
       set({ isCheckingAuth: false });
     }
   },
-  signUp: async (data) => {
+  signup: async (data) => {
     set({ isSigningUp: true });
     // Simulate API call
     try {
@@ -48,7 +48,7 @@ export const useAuthStore = create((set, get) => ({
       set({ isSigningUp: false });
     }
   },
-  Login: async (data) => {
+  login: async (data) => {
     set({ isLoggingIn: true });
     // Simulate API call
     try {
@@ -84,7 +84,7 @@ export const useAuthStore = create((set, get) => ({
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
-          "Profile Update Failed. Please try again."
+        "Profile Update Failed. Please try again."
       );
       console.error("Update Profile Error:", error);
     } finally {
@@ -95,22 +95,22 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL,{
-        query:{
-            userId:authUser._id
-        }
+    const socket = io(BASE_URL, {
+      query: {
+        userId: authUser._id
+      }
     });
     socket.connect();
 
-    set({socket:socket})
+    set({ socket: socket })
 
     socket.on("getOnlineUsers", (userIds) => {
-      set({ onlineUsers:userIds });
+      set({ onlineUsers: userIds });
     });
 
   },
   disconnectSocket: () => {
-    if (get().socket.connected) get().socket.disconnect();
+    if (get().socket?.connected) get().socket.disconnect();
   },
 }));
 

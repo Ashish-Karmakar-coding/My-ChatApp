@@ -1,7 +1,7 @@
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 import { cloudinary } from "../utils/cloudinary.util.js";
-import {getReceiverSocketId,io} from "../utils/Soket.js";
+import { getReceiverSocketId, io } from "../utils/socket.js";
 
 const getUserForSideBar = async (req, res) => {
   const myId = req.user._id;
@@ -13,18 +13,19 @@ const getUserForSideBar = async (req, res) => {
     }
     return res.status(200).json(users);
   } catch (error) {
-    throw new Error("Error in getting user for sidebar");
+    console.error("Error in getUserForSideBar:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 const getMessages = async (req, res) => {
   try {
-    const { id: senderId } = req.params;
+    const { id: receiverId } = req.params;
     const myId = req.user._id;
 
     const messages = await Message.find({
       $or: [
-        { senderId: myId, reciverId: senderId },
-        { senderId: senderId, reciverId: myId },
+        { senderId: myId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: myId },
       ],
     });
 
@@ -34,19 +35,20 @@ const getMessages = async (req, res) => {
 
     res.status(200).json(messages);
   } catch (error) {
-    throw new error("Error in getting messages");
+    console.error("Error in getMessages:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 const sendMessage = async (req, res) => {
-  const { id: reciverId } = req.params;
+  const { id: receiverId } = req.params;
   const { text, photo } = req.body;
   const senderId = req.user._id;
 
   try {
-    if (!reciverId || !senderId) {
+    if (!receiverId || !senderId) {
       return res
         .status(400)
-        .json({ message: "Reciver ID or Sender ID is missing" });
+        .json({ message: "Receiver ID or Sender ID is missing" });
     }
 
     let imgURL;
@@ -63,21 +65,22 @@ const sendMessage = async (req, res) => {
 
     const newMessage = new Message({
       senderId,
-      reciverId,
+      receiverId,
       text,
       photo: imgURL,
     });
 
     await newMessage.save();
 
-    const receiverSocketId = getReceiverSocketId(reciverId);
+    const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     res.status(200).json(newMessage);
   } catch (error) {
-    throw new Error("Error in sending message");
+    console.error("Error in sendMessage:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

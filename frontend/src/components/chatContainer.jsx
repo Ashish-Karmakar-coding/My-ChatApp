@@ -1,13 +1,11 @@
 import { useEffect, useRef } from "react";
-import InputComp from "./input.jsx";
-import Header from "./header.jsx";
+import InputComp from "./Input.jsx";
+import Header from "./Header.jsx";
 import { formatMessageTime } from "../lib/utils.js";
 import avatar from "../assets/avatar.jpg";
 import { useAuthStore } from "../lib/authStore.js";
 import useChatStore from "../lib/useChatStore.js";
-import MessageSkeleton from "../skeletons/messageSkele.jsx";
-
-import { motion } from "motion/react"
+import MessageSkeleton from "../skeletons/MessageSkele.jsx";
 
 const ChatContainer = () => {
   const {
@@ -28,12 +26,7 @@ const ChatContainer = () => {
     return () => {
       unsubscribeFromMessages();
     };
-  }, [
-    selectedUser._id,
-    getMessages,
-    subscribeToMessages,
-    unsubscribeFromMessages,
-  ]);
+  }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -46,60 +39,61 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className=" flex flex-col w-full bg-gray-800">
+    <div className="flex-1 flex flex-col bg-black/10 relative overflow-hidden">
       <Header />
 
-      {/* Messages area */}
-      <div
-        className="overflow-y-auto p-4 space-y-4"
-        style={{ height: "calc(100vh - 64px - 115px)" }}
-        // 64px for header, 80px for input (adjust as needed)
-      >
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 custom-scrollbar">
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${
-              message.senderId === authUser._id ? "chat-end " : "chat-start"
-            }`}
+            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className="chat-image avatar">
-              <div className="size-10 rounded-full border overflow-hidden">
+              <div className="size-10 rounded-full ring-1 ring-white/10 shadow-2xl">
                 <img
                   src={
                     message.senderId === authUser._id
                       ? authUser.profilePicture || avatar
                       : selectedUser?.profilePicture || avatar
                   }
-                  className="rounded-full object-cover w-full h-full"
-                  alt="profile pic"
+                  alt="avatar"
+                  className="object-cover w-full h-full"
                 />
               </div>
             </div>
-            <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1 text-zinc-100">
+
+            <div className="chat-header mb-1 text-[10px] sm:text-xs opacity-50 tracking-wider font-medium">
+              <time className="mx-1">
                 {formatMessageTime(message.createdAt)}
               </time>
             </div>
-            <div className={`${
-              message.senderId === authUser._id ? "chat-bubble flex flex-col text-zinc-100 bg-purple-800" : "chat-bubble flex flex-col text-zinc-100"
-            }`}>
+
+            <div
+              className={`chat-bubble flex flex-col min-h-0 py-2 sm:py-3 px-4 rounded-2xl shadow-xl transition-all duration-300 ${message.senderId === authUser._id
+                ? "bg-gradient-to-br from-cyan-600/80 to-purple-600/80 text-white backdrop-blur-md ring-1 ring-white/10"
+                : "modern-glass text-slate-100"
+                }`}
+            >
               {message.photo && (
                 <img
                   src={message.photo}
                   alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
+                  className="max-w-[180px] sm:max-w-[240px] rounded-xl mb-2.5 shadow-lg ring-1 ring-white/5"
                 />
               )}
-              {message.text && <p>{message.text}</p>}
+              {message.text && <p className="leading-relaxed text-sm sm:text-base font-medium">{message.text}</p>}
+            </div>
+
+            <div className="chat-footer opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Optional: Delivery status */}
             </div>
           </div>
         ))}
-        <div key="message-end" ref={messageEndRef} />
+        <div ref={messageEndRef} />
       </div>
 
-      {/* Fixed input at bottom */}
-      <div className="fixed bottom-0 left-55 right-0 bg-gray-800 border-t border-gray-700 p-4">
+      <div className="p-4 sm:p-6 bg-white/5 backdrop-blur-lg border-t border-white/5">
         <InputComp />
       </div>
     </div>

@@ -11,6 +11,7 @@ const InputComp = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
@@ -35,10 +36,9 @@ const InputComp = () => {
     try {
       await sendMessage({
         text: text.trim(),
-        image: imagePreview,
+        photo: imagePreview,
       });
 
-      // Clear form
       setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -48,56 +48,58 @@ const InputComp = () => {
   };
 
   return (
-    <div className="p-0.5 w-full">
+    <div className="w-full">
       {imagePreview && (
-        <div className="mb-3 flex items-center gap-2">
-          <div className="relative">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="relative group">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+              className="size-20 object-cover rounded-2xl ring-2 ring-white/10 shadow-2xl"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
-              flex items-center justify-center border-zinc-700x"
+              className="absolute -top-2.5 -right-2.5 size-7 rounded-xl bg-red-500/90 text-white
+              flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 backdrop-blur-sm"
               type="button"
             >
-              <X className="size-3" />
+              <X className="size-4" />
             </button>
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-        <div className="flex-1 flex gap-2">
+      <form onSubmit={handleSendMessage} className="flex items-center gap-3">
+        <div className="flex-1 flex gap-2 relative">
           <input
             type="text"
-            className="w-full h-1rem input input-bordered rounded-lg input-sm sm:input-md text-zinc-400"
-            placeholder="Type a message..."
+            className="input-modern pr-14"
+            placeholder="Write your message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+
           <input
             type="file"
             accept="image/*"
-            className="hidden border-amber-50"
+            className="hidden"
             ref={fileInputRef}
             onChange={handleImageChange}
           />
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl transition-all duration-300
+                     ${imagePreview ? "text-cyan-400 bg-cyan-400/10" : "text-slate-500 hover:text-cyan-400 hover:bg-cyan-400/10"}`}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Image size={20} />
+            <Image size={22} />
           </button>
         </div>
+
         <button
           type="submit"
-          className="btn btn-sm btn-circle text-zinc-400"
+          className="btn-modern !p-3.5 shadow-cyan-500/10 hover:shadow-cyan-500/20"
           disabled={!text.trim() && !imagePreview}
         >
           <Send size={22} />
@@ -107,4 +109,4 @@ const InputComp = () => {
   );
 };
 
-export default InputComp
+export default InputComp;

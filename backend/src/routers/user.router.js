@@ -1,19 +1,21 @@
 import express from 'express';
-import {signup ,
+import {
+        signup,
         login,
-        logout ,
+        logout,
         updateProfile,
-        checkUser } from '../controllers/user.controler.js';
-import {tokenCheck}  from '../middleware/tokenCheck.middleware.js';
+        checkUser
+} from '../controllers/user.controller.js';
+import { tokenCheck } from '../middleware/tokenCheck.middleware.js';
 
 const router = express.Router();
 
-router.post("/signup",signup)
-router.post("/login",login)
-router.get("/logout",logout)
+router.post("/signup", signup)
+router.post("/login", login)
+router.get("/logout", logout)
 
-router.put("/update-profile",tokenCheck,updateProfile)
+router.put("/update-profile", tokenCheck, updateProfile)
 
-router.get("/check-user",tokenCheck,checkUser)
+router.get("/check-user", tokenCheck, checkUser)
 
 export default router;
