@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import InputComp from "./input.jsx";
+import InputComp from "./Input.jsx";
 import { formatMessageTime } from "../lib/utils.js";
 import avatar from "../assets/avatar.jpg";
 import { useAuthStore } from "../lib/authStore.js";
 import useChatStore from "../lib/useChatStore.js";
-import MessageSkeleton from "../skeletons/messageSkele.jsx";
+import MessageSkeleton from "../skeletons/MessageSkele.jsx";
 import { MoreVertical, Search, ArrowLeft, X, Trash2, LogOut } from "lucide-react";
 
 const ChatContainer = () => {
