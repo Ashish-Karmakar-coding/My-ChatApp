@@ -4,7 +4,8 @@ import {
         login,
         logout,
         updateProfile,
-        checkUser
+        checkUser,
+        deleteAccount
 } from '../controllers/user.controller.js';
 import { tokenCheck } from '../middleware/tokenCheck.middleware.js';
 
@@ -17,5 +18,7 @@ router.get("/logout", logout)
 router.put("/update-profile", tokenCheck, updateProfile)
 
 router.get("/check-user", tokenCheck, checkUser)
+
+router.delete("/delete", tokenCheck, deleteAccount);
 
 export default router;

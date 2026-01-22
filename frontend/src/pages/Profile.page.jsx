@@ -1,13 +1,14 @@
-import { useState, useRef } from "react";
+
+
+import { useState } from "react";
 import { useAuthStore } from "../lib/authStore.js";
 import avatar from "../assets/avatar.jpg";
 import { Camera, LogOut, User, Mail, ShieldCheck } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function ProfilePage() {
-  const fileInputRef = useRef(null);
 
-  const { logout, authUser, updateProfile, isUpdatingProfile } = useAuthStore();
+  const { logout, authUser, updateProfile, isUpdatingProfile, deleteAccount } = useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
 
   const handleLogout = () => {
@@ -37,7 +38,7 @@ export default function ProfilePage() {
 
       try {
         await updateProfile({ profilePicture: base64Image });
-      } catch (error) {
+      } catch {
         toast.error('Upload failed. Please try again.');
         setSelectedImg(null);
       }
@@ -129,6 +130,18 @@ export default function ProfilePage() {
           >
             <LogOut size={18} />
             Sign Out Account
+          </button>
+
+          <button
+            className="w-full btn-modern !py-4 mt-4 !bg-red-500/10 !text-red-400 border border-red-500/20 hover:!bg-red-500/20 shadow-red-500/10 hover:shadow-red-500/20"
+            onClick={async () => {
+              if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+                await deleteAccount();
+              }
+            }}
+          >
+            <LogOut size={18} className="rotate-180" />
+            Delete Account
           </button>
         </div>
       </div>

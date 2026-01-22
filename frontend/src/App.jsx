@@ -5,7 +5,7 @@ import SignUpPage from "./pages/SignUp.page.jsx";
 import SettingPage from "./pages/Settings.page.jsx";
 import ProfilePage from "./pages/Profile.page.jsx";
 import HomePage from "./pages/Home.page.jsx";
-import Navbar from "./components/Navbar.jsx";
+
 import { useThemeStore } from "./lib/themeStore.js";
 import { useAuthStore } from "./lib/authStore.js";
 
@@ -17,12 +17,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth()
-  }, []);
+  }, [checkAuth]);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <div data-theme={theme}>
-      <Navbar />
+
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/signup" />} />
         <Route path="/login" element={!authUser ? <LogInPage /> : <Navigate to="/" />} />

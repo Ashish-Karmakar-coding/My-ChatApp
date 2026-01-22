@@ -202,4 +202,20 @@ const checkUser = (req, res) => {
     }
 }
 
-export { signup, login, logout, updateProfile, checkUser };
+const deleteAccount = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const deletedUser = await User.findByIdAndDelete(userId);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Account deleted successfully" });
+    } catch (error) {
+        console.error("Error in deleteAccount:", error.message);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export { signup, login, logout, updateProfile, checkUser, deleteAccount };

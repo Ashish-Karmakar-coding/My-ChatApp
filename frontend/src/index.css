@@ -2,83 +2,64 @@
 @plugin "daisyui";
 
 :root {
-  --bg-midnight: #020617;
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --accent-cyan: #22d3ee;
-  --accent-purple: #a855f7;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-}
+  /* WhatsApp Dark Theme Palette */
+  --bg-primary: #0b141a;
+  /* Deepest Black/Green for background */
+  --bg-secondary: #202c33;
+  /* Sidebar/Headers */
+  --bg-tertiary: #111b21;
+  /* Chat list background */
 
-html,
-body {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  color: white;
-  background: #0f172a;
-  background-image:
-    radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.5) 0px, transparent 80%);
-  background-attachment: fixed;
+  --color-accent: #f97316;
+  /* Orange Primary */
+  --color-accent-hover: #ea580c;
+
+  --text-primary: #e9edef;
+  --text-secondary: #8696a0;
+
+  --incoming-bubble: #202c33;
+  --outgoing-bubble: #f97316;
+  /* Orange bubble */
+
+  --header-height: 60px;
 }
 
 body {
-  min-height: 100vh;
-  color: var(--text-main);
-  font-family: 'Inter', system-ui, sans-serif;
-  overflow-x: hidden;
+  @apply min-h-screen text-[var(--text-primary)] overflow-hidden;
+  background-color: var(--bg-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-@utility modern-glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
 }
 
-@utility glass-card {
-  @apply modern-glass rounded-2xl;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(134, 150, 160, 0.3) !important;
 }
 
-@utility btn-modern {
-  @apply px-4 py-2 rounded-xl transition-all duration-300 font-semibold flex items-center gap-2;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-  color: white;
-  border: none;
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
 
-  &:hover {
-    filter: brightness(1.2);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.3);
+@layer utilities {
+  .app-container {
+    @apply w-full h-screen overflow-hidden flex relative;
+    background-color: var(--bg-primary);
   }
 
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  .sidebar-container {
+    @apply flex flex-col h-full border-r border-[#2f3b43];
+    background-color: var(--bg-tertiary);
   }
-}
 
-@utility input-modern {
-  @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl transition-all duration-300 text-white placeholder:text-slate-500;
-
-  &:focus {
-    @apply border-cyan-500/50 outline-none ring-2 ring-cyan-500/20 bg-white/10;
+  .chat-bg {
+    background-color: #0b141a;
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    background-repeat: repeat;
+    background-size: 400px;
+    opacity: 0.9;
   }
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
