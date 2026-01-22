@@ -33,6 +33,20 @@ app.use(cookieParser());
 app.use("/api/users", userRoutes)
 app.use("/api/messages", messageRoutes)
 
+// Health check endpoint
+app.get("/", (req, res) => {
+    res.json({ status: "Server is running", timestamp: new Date().toISOString() });
+});
+
+app.get("/api", (req, res) => {
+    res.json({ status: "API is running", routes: ["/api/users", "/api/messages"] });
+});
+
+// Log registered routes for debugging
+console.log("Registered routes:");
+console.log("- /api/users");
+console.log("- /api/messages");
+
 // Increase payload size limit - ADD THIS TO YOUR SERVER FILE
 
 /* 
