@@ -22,7 +22,7 @@ if (!process.env.MONGO_URI) {
 const __dirname = path.resolve();
 
 app.use(cors({
-    origin: process.env.NODE_ENV === "production" ? false : "http://localhost:5173", // 'false' in production means we let the browser handle it or rely on the same-origin policy if served from same host
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
 }));
 
@@ -35,6 +35,8 @@ app.use("/api/messages", messageRoutes)
 
 // Increase payload size limit - ADD THIS TO YOUR SERVER FILE
 
+/* 
+// Start static file serving (For Monolith deployment only)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, '../frontend/dist')))
     // ✅ Fixed: Added parameter name to wildcard route
@@ -42,6 +44,7 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
     });
 }
+*/
 
 server.listen(PORT, () => {
     connectDB()
