@@ -27,6 +27,7 @@ const getMessages = async (req, res) => {
         { senderId: myId, receiverId: receiverId },
         { senderId: receiverId, receiverId: myId },
       ],
+      deletedFor: { $ne: myId }
     });
 
     if (!messages) {
@@ -84,4 +85,55 @@ const sendMessage = async (req, res) => {
   }
 };
 
-export { getUserForSideBar, getMessages, sendMessage };
+const deleteMessage = async (req, res) => {
+  const { id: messageId } = req.params;
+  const { type } = req.body;
+  const myId = req.user._id;
+
+  console.log(`[DELETE_MSG] Attempting to delete message: ${messageId} | Type: ${type} | User: ${myId}`);
+
+  try {
+    const message = await Message.findById(messageId);
+    if (!message) {
+      console.error(`[DELETE_MSG] Message not found for ID: ${messageId}`);
+      return res.status(404).json({ message: "Message not found" });
+    }
+
+    if (type === "everyone") {
+      if (message.senderId.toString() !== myId.toString()) {
+        console.warn(`[DELETE_MSG] Forbidden: User ${myId} tried to delete message sent by ${message.senderId}`);
+        return res
+          .status(403)
+          .json({ message: "You can only delete your own messages for everyone" });
+      }
+
+      message.isDeletedForEveryone = true;
+      message.text = "This message was deleted";
+      message.photo = null;
+      await message.save();
+      console.log(`[DELETE_MSG] Deleted for everyone: ${messageId}`);
+
+      const receiverSocketId = getReceiverSocketId(message.receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("messageDeleted", {
+          messageId: message._id,
+          type: "everyone",
+        });
+      }
+    } else {
+      // type === "me"
+      if (!message.deletedFor.includes(myId)) {
+        message.deletedFor.push(myId);
+        await message.save();
+        console.log(`[DELETE_MSG] Deleted for user ${myId}: ${messageId}`);
+      }
+    }
+
+    res.status(200).json({ message: "Message deleted successfully", messageId });
+  } catch (error) {
+    console.error("[DELETE_MSG] Internal error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export { getUserForSideBar, getMessages, sendMessage, deleteMessage };

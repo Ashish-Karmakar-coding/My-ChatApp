@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useAuthStore } from "../lib/authStore.js";
 import avatar from "../assets/avatar.jpg";
-import { Camera, LogOut, User, Mail, ShieldCheck } from "lucide-react";
+import { Camera, LogOut, User, Mail, ShieldCheck, ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
-
+  const navigate = useNavigate();
   const { logout, authUser, updateProfile, isUpdatingProfile, deleteAccount } = useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
 
@@ -47,8 +48,20 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 sm:p-8">
-      <div className="max-w-md w-full bg-[var(--bg-secondary)] p-8 sm:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl border border-white/5">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-[var(--bg-secondary)] p-6 sm:p-10 rounded-[2.5rem] relative overflow-hidden shadow-2xl border border-white/5">
+
+        {/* Profile Header with Back Button */}
+        <div className="flex items-center gap-4 mb-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 hover:bg-white/5 rounded-full transition-colors text-[var(--text-secondary)] hover:text-white"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+          <h1 className="text-xl font-bold text-[var(--text-primary)]">Profile</h1>
+        </div>
+
         <div className="flex flex-col items-center relative z-10">
           <div className="flex flex-col items-center gap-6">
             <div className="relative group">

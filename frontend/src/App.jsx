@@ -26,8 +26,8 @@ export default function App() {
 
   if (isCheckingAuth && !authUser) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-900">
-        <Loader className="w-10 h-10 animate-spin text-purple-700 " />
+      <div className="flex items-center justify-center h-screen bg-[var(--bg-primary)]">
+        <Loader className="w-10 h-10 animate-spin text-[var(--color-accent)]" />
       </div>
     )
   }

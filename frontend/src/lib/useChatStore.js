@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../axios/axios.js";
 import { toast } from "react-hot-toast";
-import {useAuthStore} from "./authStore.js";
+import { useAuthStore } from "./authStore.js";
 
 const useChatStore = create((set, get) => ({
   messages: [],
@@ -48,9 +48,30 @@ const useChatStore = create((set, get) => ({
       toast.error(error.response.data.message);
     }
   },
+  deleteMessage: async (messageId, type) => {
+    const { messages } = get();
+    try {
+      await axiosInstance.delete(`/messages/${messageId}`, { data: { type } });
+      if (type === "me") {
+        set({
+          messages: messages.filter((msg) => msg._id !== messageId),
+        });
+      } else {
+        // "everyone"
+        set({
+          messages: messages.map((msg) =>
+            msg._id === messageId ? { ...msg, text: "This message was deleted", photo: null, isDeletedForEveryone: true } : msg
+          ),
+        });
+      }
+      toast.success("Message deleted");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete message");
+    }
+  },
   subscribeToMessages: () => {
     const { selectedUser } = get();
-    if (!selectedUser) return; // Fixed: should be !selectedUser
+    if (!selectedUser) return;
 
     const socket = useAuthStore.getState().socket;
 
@@ -59,16 +80,27 @@ const useChatStore = create((set, get) => ({
         newMessage.senderId === selectedUser._id;
       if (!isMessageSentFromSelectedUser) return;
 
-      // Get fresh messages to avoid stale closure
       const { messages } = get();
       set({
         messages: [...messages, newMessage],
       });
     });
+
+    socket.on("messageDeleted", ({ messageId, type }) => {
+      const { messages } = get();
+      if (type === "everyone") {
+        set({
+          messages: messages.map((msg) =>
+            msg._id === messageId ? { ...msg, text: "This message was deleted", photo: null, isDeletedForEveryone: true } : msg
+          ),
+        });
+      }
+    });
   },
   unsubscribeFromMessages: () => {
     const socket = useAuthStore.getState().socket;
     socket.off("newMessage");
+    socket.off("messageDeleted");
   },
   setSelectedUser: (selectedUser) => set({ selectedUser }),
 }));

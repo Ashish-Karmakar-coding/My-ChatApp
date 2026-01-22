@@ -5,23 +5,23 @@ export default function HomeSkele() {
 
     const FloatingDots = () => (
         <div className="relative w-32 h-32 flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full border-2 border-purple-500/20 animate-spin-slow"></div>
-            <div className="absolute inset-4 rounded-full border border-purple-400/30 animate-spin-reverse"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-[var(--color-accent)]/20 animate-spin-slow"></div>
+            <div className="absolute inset-4 rounded-full border border-[var(--color-accent)]/30 animate-spin-reverse"></div>
             <div className="relative flex space-x-2">
-                <div className="w-3 h-3 bg-purple-500 rounded-full animate-float-1"></div>
-                <div className="w-3 h-3 bg-purple-400 rounded-full animate-float-2"></div>
-                <div className="w-3 h-3 bg-purple-600 rounded-full animate-float-3"></div>
+                <div className="w-3 h-3 bg-[var(--color-accent)] rounded-full animate-float-1"></div>
+                <div className="w-3 h-3 bg-[var(--color-accent)]/80 rounded-full animate-float-2"></div>
+                <div className="w-3 h-3 bg-[var(--color-accent)]/60 rounded-full animate-float-3"></div>
             </div>
         </div>
     );
 
     const TypingIndicator = () => (
         <div className="relative w-32 h-32 flex items-center justify-center">
-            <div className="bg-gray-700 rounded-3xl p-6 shadow-2xl border border-gray-600">
+            <div className="bg-[var(--bg-primary)] rounded-3xl p-6 shadow-2xl border border-white/5">
                 <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-typing-1"></div>
-                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-typing-2"></div>
-                    <div className="w-2 h-2 bg-purple-600 rounded-full animate-typing-3"></div>
+                    <div className="w-2 h-2 bg-[var(--color-accent)] rounded-full animate-typing-1"></div>
+                    <div className="w-2 h-2 bg-[var(--color-accent)]/80 rounded-full animate-typing-2"></div>
+                    <div className="w-2 h-2 bg-[var(--color-accent)]/60 rounded-full animate-typing-3"></div>
                 </div>
             </div>
             <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full animate-ping"></div>
@@ -34,7 +34,7 @@ export default function HomeSkele() {
                 {[...Array(7)].map((_, i) => (
                     <div
                         key={i}
-                        className="w-2 bg-gradient-to-t from-purple-600 to-purple-400 rounded-full animate-wave"
+                        className="w-2 bg-gradient-to-t from-[var(--color-accent)] to-[#fbd38d] rounded-full animate-wave"
                         style={{
                             height: `${20 + Math.sin(i * 0.5) * 15}px`,
                             animationDelay: `${i * 0.1}s`
@@ -42,14 +42,14 @@ export default function HomeSkele() {
                     ></div>
                 ))}
             </div>
-            <div className="absolute inset-0 bg-purple-500/10 rounded-full animate-pulse-slow"></div>
+            <div className="absolute inset-0 bg-[var(--color-accent)]/10 rounded-full animate-pulse-slow"></div>
         </div>
     );
 
     const GlowingOrb = () => (
         <div className="relative w-32 h-32 flex items-center justify-center">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 rounded-full animate-gradient blur-sm"></div>
-            <div className="relative w-20 h-20 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700 rounded-full animate-pulse-glow shadow-2xl shadow-purple-500/50">
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent)] via-[#fbd38d] to-[var(--color-accent)] rounded-full animate-gradient blur-sm"></div>
+            <div className="relative w-20 h-20 bg-gradient-to-r from-[var(--color-accent)] via-[#ea580c] to-[#c2410c] rounded-full animate-pulse-glow shadow-2xl shadow-[var(--color-accent)]/50">
                 <div className="absolute inset-2 bg-white/20 rounded-full animate-float-slow"></div>
                 <div className="absolute top-4 left-4 w-2 h-2 bg-white/60 rounded-full animate-twinkle"></div>
                 <div className="absolute bottom-6 right-6 w-1 h-1 bg-white/40 rounded-full animate-twinkle-delayed"></div>
@@ -65,20 +65,19 @@ export default function HomeSkele() {
     };
 
     return (
-        <div className="flex-1 flex items-center justify-center bg-gray-900 h-[92dvh]">
-            <div className="w-full max-w-xl mx-auto bg-gray-800 rounded-2xl shadow-lg p-10 flex flex-col items-center">
-                
+        <div className="flex-1 flex items-center justify-center bg-[var(--bg-primary)] h-[92dvh]">
+            <div className="w-full max-w-xl mx-auto bg-[var(--bg-secondary)] rounded-[3rem] shadow-2xl p-10 flex flex-col items-center border border-white/5">
+
                 {/* Animation Selector */}
-                <div className="mb-6 flex space-x-2 bg-gray-700 rounded-xl p-1">
+                <div className="mb-8 flex space-x-2 bg-[var(--bg-primary)] rounded-[1.5rem] p-1.5 border border-white/5">
                     {Object.entries(animations).map(([key, { name }]) => (
                         <button
                             key={key}
                             onClick={() => setCurrentAnimation(key)}
-                            className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-                                currentAnimation === key
-                                    ? 'bg-purple-600 text-white shadow-lg'
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-600'
-                            }`}
+                            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${currentAnimation === key
+                                    ? 'bg-[var(--color-accent)] text-white shadow-lg'
+                                    : 'text-[var(--text-secondary)] hover:text-white hover:bg-white/5'
+                                }`}
                         >
                             {name}
                         </button>
@@ -86,19 +85,21 @@ export default function HomeSkele() {
                 </div>
 
                 {/* Current Animation */}
-                <div className="flex flex-col items-center mb-8">
-                    {animations[currentAnimation].component}
-                    
+                <div className="flex flex-col items-center mb-10">
+                    <div className="p-8 rounded-full bg-[var(--bg-primary)] border border-white/5 shadow-inner scale-110">
+                        {animations[currentAnimation].component}
+                    </div>
+
                     {/* Message bubble */}
-                    <div className="mt-6 animate-slide-up">
-                        <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-2xl shadow-lg">
-                            <span className="text-sm font-medium">Ready to chat! ✨</span>
+                    <div className="mt-10 animate-slide-up">
+                        <div className="bg-gradient-to-r from-[var(--color-accent)] to-[#fbd38d] text-white px-8 py-4 rounded-[2rem] shadow-2xl ring-4 ring-[var(--color-accent)]/10">
+                            <span className="text-sm font-bold tracking-tight">Ready to chat with Melo! ✨</span>
                         </div>
                     </div>
                 </div>
 
-                <p className="text-gray-400 text-center text-lg font-medium">
-                    Select a user from the sidebar to start chatting!
+                <p className="text-[var(--text-secondary)] text-center text-lg font-medium max-w-xs leading-relaxed">
+                    Select a conversation from the sidebar to start <span className="text-[var(--color-accent)]">Melo messaging</span>.
                 </p>
 
                 <style jsx>{`
@@ -150,8 +151,8 @@ export default function HomeSkele() {
                         50% { transform: rotate(180deg) scale(1.1); }
                     }
                     @keyframes pulse-glow {
-                        0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
-                        50% { box-shadow: 0 0 40px rgba(147, 51, 234, 0.8), 0 0 60px rgba(236, 72, 153, 0.3); }
+                        0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
+                        50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.8), 0 0 60px rgba(251, 211, 141, 0.3); }
                     }
                     @keyframes float-slow {
                         0%, 100% { transform: translate(0, 0) rotate(0deg); }

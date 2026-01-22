@@ -22,12 +22,38 @@
   --outgoing-bubble: #f97316;
 
   --header-height: 64px;
+  /* Premium Skeleton Styles */
+  --skeleton-bg: #1a1a1a;
+  --skeleton-highlight: #2a2a2a;
+  --skeleton-accent-pulse: rgba(249, 115, 22, 0.05);
 }
 
 body {
   @apply min-h-screen text-[var(--text-primary)] overflow-hidden;
   background-color: var(--bg-primary);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Skeleton Keyframes */
+@keyframes premium-pulse {
+
+  0%,
+  100% {
+    background-color: var(--skeleton-bg);
+    opacity: 1;
+  }
+
+  50% {
+    background-color: var(--skeleton-highlight);
+    box-shadow: inset 0 0 20px var(--skeleton-accent-pulse);
+    opacity: 0.8;
+  }
+}
+
+.premium-skeleton {
+  background-color: var(--skeleton-bg);
+  animation: premium-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border: 1px border-white/5;
 }
 
 /* Scrollbar */
@@ -80,5 +106,21 @@ body {
 
   .vibrant-orange-btn:active {
     @apply scale-[0.98];
+  }
+
+  .scale-in-center {
+    animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+
+  @keyframes scale-in-center {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }

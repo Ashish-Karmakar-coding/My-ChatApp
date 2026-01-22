@@ -13,7 +13,14 @@ const messageSchema = new mongoose.Schema({
     },
     text: String,
     photo: String,
-
+    deletedFor: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    isDeletedForEveryone: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true })
 
 export const Message = mongoose.model('Message', messageSchema);
