@@ -102,8 +102,12 @@ const InputComp = () => {
           />
           <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImageChange} />
 
-          <button type="submit" className="p-2.5 rounded-full bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] transition-colors shadow-sm" disabled={!text.trim() && !imagePreview}>
-            <Send className="w-5 h-5 ml-0.5" />
+          <button
+            type="submit"
+            className="p-3 rounded-full vibrant-orange-btn !rounded-full shadow-lg shadow-orange-500/20 active:scale-90 transition-all"
+            disabled={!text.trim() && !imagePreview}
+          >
+            <Send className="w-5 h-5" />
           </button>
         </form>
       </div>

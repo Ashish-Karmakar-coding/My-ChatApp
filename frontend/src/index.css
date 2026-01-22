@@ -2,26 +2,26 @@
 @plugin "daisyui";
 
 :root {
-  /* WhatsApp Dark Theme Palette */
-  --bg-primary: #0b141a;
-  /* Deepest Black/Green for background */
-  --bg-secondary: #202c33;
-  /* Sidebar/Headers */
-  --bg-tertiary: #111b21;
+  /* True Dark Black & Orange Theme */
+  --bg-primary: #000000;
+  /* Deep Black */
+  --bg-secondary: #121212;
+  /* Dark Grey Surface */
+  --bg-tertiary: #0a0a0a;
   /* Chat list background */
 
   --color-accent: #f97316;
-  /* Orange Primary */
+  /* Orange-500 */
   --color-accent-hover: #ea580c;
+  /* Orange-600 */
 
-  --text-primary: #e9edef;
-  --text-secondary: #8696a0;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
 
-  --incoming-bubble: #202c33;
+  --incoming-bubble: #1a1a1a;
   --outgoing-bubble: #f97316;
-  /* Orange bubble */
 
-  --header-height: 60px;
+  --header-height: 64px;
 }
 
 body {
@@ -51,15 +51,34 @@ body {
   }
 
   .sidebar-container {
-    @apply flex flex-col h-full border-r border-[#2f3b43];
-    background-color: var(--bg-tertiary);
+    @apply flex flex-col h-full border-r border-white/5;
+    background-color: #050505;
+    backdrop-filter: blur(10px);
   }
 
   .chat-bg {
-    background-color: #0b141a;
-    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
-    background-repeat: repeat;
-    background-size: 400px;
-    opacity: 0.9;
+    background-color: #000000;
+    position: relative;
+    background-image:
+      radial-gradient(circle at 2px 2px, rgba(249, 115, 22, 0.05) 1.5px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  .premium-header {
+    @apply h-[var(--header-height)] bg-[#121212]/80 backdrop-blur-md px-4 py-2 flex items-center justify-between border-b border-white/5 z-10 sticky top-0;
+  }
+
+  .vibrant-orange-btn {
+    @apply bg-[var(--color-accent)] text-white font-bold rounded-2xl transition-all duration-300;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+  }
+
+  .vibrant-orange-btn:hover {
+    @apply bg-[var(--color-accent-hover)] scale-[1.02];
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+  }
+
+  .vibrant-orange-btn:active {
+    @apply scale-[0.98];
   }
 }
