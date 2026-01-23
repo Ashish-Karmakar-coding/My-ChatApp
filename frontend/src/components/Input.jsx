@@ -31,7 +31,7 @@ const InputComp = () => {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;
     try {
-      await sendMessage({ text: text.trim(), image: imagePreview });
+      await sendMessage({ text: text.trim(), photo: imagePreview });
       setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
